@@ -12,6 +12,11 @@ class ForecastController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        self.navigationController!.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        self.navigationController!.navigationBar.shadowImage = UIImage()
+        self.navigationController!.navigationBar.isTranslucent = true
+        self.title = "Forecast"
+        //
         var gradientLayer: CAGradientLayer!
         gradientLayer = CAGradientLayer()
         gradientLayer.frame = self.view.bounds

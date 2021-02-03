@@ -13,5 +13,9 @@ extension UITabBar {
         UITabBar.appearance().backgroundImage = UIImage()
         UITabBar.appearance().shadowImage     = UIImage()
         UITabBar.appearance().clipsToBounds   = true
+        UITabBar.appearance().tintColor = UIColor(named: "AccentColor")
+        UITabBar.appearance().barTintColor = .white
+        
     }
 }
+

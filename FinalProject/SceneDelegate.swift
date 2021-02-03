@@ -20,29 +20,24 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(frame:windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
-        
-        window?.rootViewController = createTabbar()
-        window?.makeKeyAndVisible()
-    }
-    
-    func createTabbar() -> UITabBarController {
+        /**/
         let tabbar = UITabBarController()
-        UITabBar.appearance().tintColor = UIColor(named: "AccentColor") 
         UITabBar.setTransparentTabbar()
-        tabbar.viewControllers = [createFirstVC(), createSecondVC()]
-        return tabbar
-    }
-    
-    func createFirstVC() -> TodayController {
-        let viewController = TodayController()
-        viewController.tabBarItem = UITabBarItem(tabBarSystemItem: .contacts, tag: 0)
-        return viewController
-    }
-
-    func createSecondVC() -> ForecastController {
-        let secondVC = ForecastController()
-        secondVC.tabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 1)
-        return secondVC
+        // Today
+        let TodayVC = TodayController()
+        let TodayNC = UINavigationController(rootViewController: TodayVC)
+        TodayNC.tabBarItem = UITabBarItem(title: "Today", image: UIImage(named: "tab_today")!, tag: 0)
+        // Forecast
+        let ForecastVC = ForecastController()
+        let ForecastNC = UINavigationController(rootViewController: ForecastVC)
+        ForecastNC.tabBarItem = UITabBarItem(title: "Forecast", image:UIImage(named: "tab_forecast")! , tag: 1)
+        
+        /**/
+        tabbar.viewControllers = [TodayNC, ForecastNC]
+//        nc.navigationBar.appearance().shadowImage     = UIImage()
+//        nc.navigationBar.appearance().clipsToBounds   = true
+        window?.rootViewController = tabbar
+        window?.makeKeyAndVisible()
     }
     
     func sceneDidDisconnect(_ scene: UIScene) {
