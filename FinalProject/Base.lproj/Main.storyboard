@@ -20,7 +20,7 @@
                         <color key="backgroundColor" systemColor="systemPinkColor"/>
                     </view>
                     <navigationItem key="navigationItem" title="Today" id="sh1-Ao-tQa">
-                        <barButtonItem key="leftBarButtonItem" title="Item" image="arrow.clockwise" catalog="system" id="gji-9n-Bpk">
+                        <barButtonItem key="leftBarButtonItem" title="Refresh" image="arrow.clockwise" catalog="system" id="gji-9n-Bpk">
                             <color key="tintColor" name="accent"/>
                         </barButtonItem>
                     </navigationItem>
@@ -33,11 +33,14 @@
         <scene sceneID="983-gG-PLE">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ZxP-Ag-RXf" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" image="tab_today" id="wUu-6a-fz5"/>
+                    <tabBarItem key="tabBarItem" title="Item" image="tab_today" selectedImage="tab_today" id="wUu-6a-fz5">
+                        <color key="badgeColor" name="accent"/>
+                    </tabBarItem>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="S6p-VZ-iB7">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="S6p-VZ-iB7">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" name="bg-gradient-start"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -59,7 +62,7 @@
                         <color key="backgroundColor" systemColor="systemGreenColor"/>
                     </view>
                     <navigationItem key="navigationItem" title="Forcast" id="2Db-hJ-lOK">
-                        <barButtonItem key="leftBarButtonItem" title="Item" image="arrow.clockwise" catalog="system" id="0v1-2N-dJW">
+                        <barButtonItem key="leftBarButtonItem" title="Refresh" image="arrow.clockwise" catalog="system" id="0v1-2N-dJW">
                             <color key="tintColor" name="accent"/>
                         </barButtonItem>
                     </navigationItem>
@@ -73,10 +76,11 @@
             <objects>
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="SNA-EW-NgE" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="sCz-1J-a3x">
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="sCz-1J-a3x">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="selectedImageTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="barTintColor" name="bg-gradient-end"/>
+                        <color key="selectedImageTintColor" name="accent"/>
                     </tabBar>
                     <connections>
                         <segue destination="ZxP-Ag-RXf" kind="relationship" relationship="viewControllers" id="A4J-S0-GgP"/>
@@ -91,12 +95,15 @@
         <scene sceneID="ZHu-Qz-dj3">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="IMT-MZ-MLs" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="4ky-hG-ZS0"/>
+                    <tabBarItem key="tabBarItem" title="Item" image="tab_forecast" id="4ky-hG-ZS0">
+                        <color key="badgeColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBarItem>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="mkh-es-7jq">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="mkh-es-7jq">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="barTintColor" name="bg-gradient-start"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -110,9 +117,16 @@
     </scenes>
     <resources>
         <image name="arrow.clockwise" catalog="system" width="115" height="128"/>
+        <image name="tab_forecast" width="25" height="25"/>
         <image name="tab_today" width="30" height="29"/>
         <namedColor name="accent">
             <color red="0.9882352941176471" green="0.91764705882352937" blue="0.16078431372549021" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="bg-gradient-end">
+            <color red="0.24705882352941178" green="0.32549019607843138" blue="0.47450980392156861" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="bg-gradient-start">
+            <color red="0.40000000000000002" green="0.51372549019607838" blue="0.62352941176470589" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemGreenColor">
             <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
