@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B82C67E825CAA9A7001C4034 /* TodayController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82C67E725CAA9A7001C4034 /* TodayController.swift */; };
 		B891D8A825C96D19006471AD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B891D8A725C96D18006471AD /* AppDelegate.swift */; };
 		B891D8AA25C96D19006471AD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B891D8A925C96D19006471AD /* SceneDelegate.swift */; };
 		B891D8AC25C96D19006471AD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B891D8AB25C96D19006471AD /* ViewController.swift */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B82C67E725CAA9A7001C4034 /* TodayController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayController.swift; sourceTree = "<group>"; };
 		B891D8A425C96D18006471AD /* FinalProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FinalProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B891D8A725C96D18006471AD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B891D8A925C96D19006471AD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -39,6 +41,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B82C67E125CA9603001C4034 /* WeatherCard */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = WeatherCard;
+			sourceTree = "<group>";
+		};
 		B891D89B25C96D18006471AD = {
 			isa = PBXGroup;
 			children = (
@@ -58,6 +67,7 @@
 		B891D8A625C96D18006471AD /* FinalProject */ = {
 			isa = PBXGroup;
 			children = (
+				B82C67E125CA9603001C4034 /* WeatherCard */,
 				B891D8A725C96D18006471AD /* AppDelegate.swift */,
 				B891D8A925C96D19006471AD /* SceneDelegate.swift */,
 				B891D8AB25C96D19006471AD /* ViewController.swift */,
@@ -66,6 +76,7 @@
 				B891D8B525C96D19006471AD /* LaunchScreen.storyboard */,
 				B891D8B825C96D19006471AD /* Info.plist */,
 				B891D8B025C96D19006471AD /* FinalProject.xcdatamodeld */,
+				B82C67E725CAA9A7001C4034 /* TodayController.swift */,
 			);
 			path = FinalProject;
 			sourceTree = "<group>";
@@ -144,6 +155,7 @@
 				B891D8A825C96D19006471AD /* AppDelegate.swift in Sources */,
 				B891D8B225C96D19006471AD /* FinalProject.xcdatamodeld in Sources */,
 				B891D8AA25C96D19006471AD /* SceneDelegate.swift in Sources */,
+				B82C67E825CAA9A7001C4034 /* TodayController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
