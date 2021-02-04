@@ -9,6 +9,15 @@ import UIKit
 
 class TodayController: UIViewController {
     
+    let gradientLayer: CAGradientLayer = {
+        let layer = CAGradientLayer()
+        layer.colors = [
+            UIColor(named: "bg-gradient-start")?.cgColor ?? UIColor.blue.cgColor ,
+            UIColor(named: "bg-gradient-end")?.cgColor ?? UIColor.red.cgColor
+        ]
+        return layer
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -22,16 +31,17 @@ class TodayController: UIViewController {
                                                                 target: self,
                                                                 action: #selector(refersh))
         //
-        var gradientLayer: CAGradientLayer!
-        gradientLayer = CAGradientLayer()
         gradientLayer.frame = self.view.bounds
-        gradientLayer.colors = [UIColor(named: "bg-gradient-start")?.cgColor ?? UIColor.blue.cgColor , UIColor(named: "bg-gradient-end")?.cgColor ?? UIColor.red.cgColor]
         self.view.layer.addSublayer(gradientLayer)
-        //        self.view.backgroundColor = .red
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        gradientLayer.frame = view.bounds
     }
     
     @objc func refersh() {
-        print("refresh")
+        print("refresh Today")
     }
     
 }
