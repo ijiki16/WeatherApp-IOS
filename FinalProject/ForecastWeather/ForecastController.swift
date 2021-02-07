@@ -71,7 +71,9 @@ class ForecastController: UIViewController, CLLocationManagerDelegate, UITableVi
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ForecastTableCell", for: indexPath)
         if let forcastrow = cell as? ForecastTableCell{
-//            ForecastTableCell.tem = "20˚C"
+            forcastrow.temp.text = "27˚C"
+            print(indexPath)
+            print(forecastData[0])
 //            ForecastTableCell.date = "2020/11/10"
 //            ForecastTableCell.textLabel?.text = "gela"
 //             ForecastTableCell.detailTextLabel?.text = "gela3"
@@ -111,7 +113,8 @@ class ForecastController: UIViewController, CLLocationManagerDelegate, UITableVi
         serivce.getFocastData(lat: "41.7646", lon: "44.754"){ result in
             switch result{
             case .success(let data):
-                print(data)
+                self.forecastData = data
+//                print(data)
             case .failure(let error):
                 print(error)
             }

@@ -9,6 +9,8 @@ import UIKit
 
 class ForecastTableCell: UITableViewCell {
     
+    @IBOutlet weak var temp: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
