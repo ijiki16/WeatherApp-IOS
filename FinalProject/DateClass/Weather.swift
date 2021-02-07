@@ -16,7 +16,7 @@ struct ForcastData : Codable{
 }
 
 struct rowData : Codable {
-    let dt: Int64
+    let dt: Double
     let main : Temp
     let weather : [Weather]
     let dt_txt : String

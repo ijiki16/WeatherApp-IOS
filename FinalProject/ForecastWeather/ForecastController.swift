@@ -8,8 +8,12 @@
 import UIKit
 import CoreLocation
 
-class ForecastController: UIViewController, CLLocationManagerDelegate {
+class ForecastController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource {
     
+    private var locationManager : CLLocationManager!
+    private let serivce = Service()
+    private var forecastData = [rowData]()
+    private let tableView = UITableView()
     let gradientLayer: CAGradientLayer = {
         let layer = CAGradientLayer()
         layer.colors = [
@@ -18,11 +22,6 @@ class ForecastController: UIViewController, CLLocationManagerDelegate {
         ]
         return layer
     }()
-    
-    var locationManager : CLLocationManager!
-    
-    let tableView = UITableView()
-//    let locationManager = CLLocationManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +33,7 @@ class ForecastController: UIViewController, CLLocationManagerDelegate {
         // Table View
         getLocationPermison()
         setupTableView()
+        
         
         
     }
@@ -49,19 +49,32 @@ class ForecastController: UIViewController, CLLocationManagerDelegate {
     
     func setupTableView() {
         view.addSubview(tableView)
-        //
+        tableView.backgroundColor = .clear
         tableView.translatesAutoresizingMaskIntoConstraints = false
-//        tableView.topAnchor.constraint(equalTo: view.topAnchor/*, constant: 100 */).isActive = true
-//        tableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-//        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor/*, constant: -100 */).isActive = true
-//        tableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         //
         tableView.topAnchor.constraint(equalTo:view.safeAreaLayoutGuide.topAnchor).isActive = true
         tableView.leadingAnchor.constraint(equalTo:view.safeAreaLayoutGuide.leadingAnchor).isActive = true
         tableView.trailingAnchor.constraint(equalTo:view.safeAreaLayoutGuide.trailingAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo:view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         //
-        tableView.backgroundColor = .clear
+        tableView.register(UINib(nibName: "ForecastTableCell", bundle: nil), forCellReuseIdentifier: "ForecastTableCell")
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+    }
+    
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 40
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ForecastTableCell", for: indexPath)
+//        if let forcastrow = cell as? ForecastTableCell{
+//            ForecastTableCell.tem = "20˚C"
+//            ForecastTableCell.date = "2020/11/10"
+//        }
+        return cell
     }
     
     override func viewDidLayoutSubviews() {
@@ -87,38 +100,19 @@ class ForecastController: UIViewController, CLLocationManagerDelegate {
     
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let cordinate = manager.location?.coordinate
+//        guard let cordinate = manager.location?.coordinate else { return <#default value#> }
 //        let locString = placemarks.count ? [placemarks.firstObject, locality] : "Not Found"
 //        print("Lat =  \(String(describing: cordinate?.latitude)), Log = \(String(describing: cordinate?.longitude))")
-        let baseurl = "https://api.openweathermap.org/data/2.5/forecast"
-        let latitude = String(cordinate?.latitude ?? 0)
-        let longitude = String(cordinate?.longitude ?? 0)
-        let url = URL(string: baseurl + "?lat=" + latitude + "&lon=" + longitude + "&appid=5f8a54152982833dbda141cb4eb7d051")!
-        
-        print(url)
-        let request = URLRequest(url: url)
-        
-        let task = URLSession.shared.dataTask(with: request) { (data, response, SesionError) in
-            if let data = data{
-                let decoder = JSONDecoder()
-                do {
-                    let reuslt = try decoder.decode(ForcastData.self, from: data)
-                    for row in reuslt.list {
-                        print(row.dt_txt) //date
-                        print(row.weather[0].main)
-//                        var date = Date(timeIntervalSince1970: (Double(row.dt)))
-//                        print("date - \(date)")
-                        print(row.main.temp) //temp
-                        break
-                    }
-//                    print(reuslt)
-                }catch{
-                    print(error)
-                }
+//        serivce.getFocastData(lat: String(cordinate.latitude), lon: String(cordinate.longitude))
+        serivce.getFocastData(lat: "41.7646", lon: "44.754"){ result in
+            switch result{
+            case .success(let data):
+                print(data)
+            case .failure(let error):
+                print(error)
             }
-//            print(data, response, SesionError)
+            
         }
-        task.resume()
     }
 }
 
