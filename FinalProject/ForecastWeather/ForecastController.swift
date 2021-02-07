@@ -70,10 +70,14 @@ class ForecastController: UIViewController, CLLocationManagerDelegate, UITableVi
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ForecastTableCell", for: indexPath)
-//        if let forcastrow = cell as? ForecastTableCell{
+        if let forcastrow = cell as? ForecastTableCell{
 //            ForecastTableCell.tem = "20˚C"
 //            ForecastTableCell.date = "2020/11/10"
-//        }
+//            ForecastTableCell.textLabel?.text = "gela"
+//             ForecastTableCell.detailTextLabel?.text = "gela3"
+            
+        }
+        cell.backgroundColor = UIColor.clear
         return cell
     }
     
