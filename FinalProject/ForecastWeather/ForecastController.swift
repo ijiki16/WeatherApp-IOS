@@ -43,7 +43,7 @@ class ForecastController: UIViewController, CLLocationManagerDelegate, UITableVi
         locationManager.delegate = self
         locationManager.requestAlwaysAuthorization()
 //        locationManager.requestLocation()
-        locationManager.desiredAccuracy = kCLLocationAccuracyKilometer
+//        locationManager.desiredAccuracy = kCLLocationAccuracyKilometer
         locationManager.startUpdatingLocation()
     }
     
@@ -65,19 +65,15 @@ class ForecastController: UIViewController, CLLocationManagerDelegate, UITableVi
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 40
+        return self.forecastData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ForecastTableCell", for: indexPath)
         if let forcastrow = cell as? ForecastTableCell{
-            forcastrow.temp.text = "27˚C"
             print(indexPath)
-            print(forecastData[0])
-//            ForecastTableCell.date = "2020/11/10"
-//            ForecastTableCell.textLabel?.text = "gela"
-//             ForecastTableCell.detailTextLabel?.text = "gela3"
-            
+            print(self.forecastData[indexPath.row])
+            forcastrow.temp.text = String(round(self.forecastData[indexPath.row].main.temp - 273.15)) + "˚C"
         }
         cell.backgroundColor = UIColor.clear
         return cell
@@ -113,7 +109,11 @@ class ForecastController: UIViewController, CLLocationManagerDelegate, UITableVi
         serivce.getFocastData(lat: "41.7646", lon: "44.754"){ result in
             switch result{
             case .success(let data):
+                self.forecastData.removeAll()
                 self.forecastData = data
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
 //                print(data)
             case .failure(let error):
                 print(error)
