@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B82C67E825CAA9A7001C4034 /* TodayController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82C67E725CAA9A7001C4034 /* TodayController.swift */; };
+		B84611CB25CFFEB7007AC37E /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84611CA25CFFEB7007AC37E /* Weather.swift */; };
 		B891D8A825C96D19006471AD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B891D8A725C96D18006471AD /* AppDelegate.swift */; };
 		B891D8AC25C96D19006471AD /* ForecastController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B891D8AB25C96D19006471AD /* ForecastController.swift */; };
 		B891D8AF25C96D19006471AD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B891D8AD25C96D19006471AD /* Main.storyboard */; };
@@ -20,6 +21,7 @@
 
 /* Begin PBXFileReference section */
 		B82C67E725CAA9A7001C4034 /* TodayController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayController.swift; sourceTree = "<group>"; };
+		B84611CA25CFFEB7007AC37E /* Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
 		B891D8A425C96D18006471AD /* FinalProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FinalProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B891D8A725C96D18006471AD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B891D8AB25C96D19006471AD /* ForecastController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastController.swift; sourceTree = "<group>"; };
@@ -43,6 +45,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B84611C925CFFE6A007AC37E /* DateClass */ = {
+			isa = PBXGroup;
+			children = (
+				B84611CA25CFFEB7007AC37E /* Weather.swift */,
+			);
+			path = DateClass;
+			sourceTree = "<group>";
+		};
 		B891D89B25C96D18006471AD = {
 			isa = PBXGroup;
 			children = (
@@ -62,6 +72,7 @@
 		B891D8A625C96D18006471AD /* FinalProject */ = {
 			isa = PBXGroup;
 			children = (
+				B84611C925CFFE6A007AC37E /* DateClass */,
 				B899B5A625CB08910087C531 /* ForecastWeather */,
 				B899B5A525CB08820087C531 /* TodayWeather */,
 				B891D8A725C96D18006471AD /* AppDelegate.swift */,
@@ -168,6 +179,7 @@
 				B899B5A325CB03B90087C531 /* Extension.swift in Sources */,
 				B891D8B225C96D19006471AD /* FinalProject.xcdatamodeld in Sources */,
 				B82C67E825CAA9A7001C4034 /* TodayController.swift in Sources */,
+				B84611CB25CFFEB7007AC37E /* Weather.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
