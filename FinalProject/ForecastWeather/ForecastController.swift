@@ -7,6 +7,7 @@
 
 import UIKit
 import CoreLocation
+import SDWebImage
 
 class ForecastController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource {
     
@@ -73,8 +74,8 @@ class ForecastController: UIViewController, CLLocationManagerDelegate, UITableVi
         if let forcastrow = cell as? ForecastTableCell{
             
             let curentRow = self.forecastData[indexPath.row]
-            print(indexPath)
-            print(curentRow)
+//            print(indexPath)
+//            print(curentRow)
             // temp
             let temperature = round(curentRow.main.temp - 273.15)
             forcastrow.temp.text = String(temperature) + "˚C"
@@ -88,6 +89,9 @@ class ForecastController: UIViewController, CLLocationManagerDelegate, UITableVi
             let firstSentence = date[index1...index2]
             forcastrow.clock.text = String(firstSentence)
             // icon
+            let urlString = "https://openweathermap.org/img/wn/10d@2x.png"
+            forcastrow.icon.sd_setImage(with: URL(string: urlString), completed: nil)
+
             
         }
         cell.backgroundColor = UIColor.clear

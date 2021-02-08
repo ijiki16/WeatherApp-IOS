@@ -7,4 +7,6 @@ target 'FinalProject' do
 
   # Pods for FinalProject
 
+pod 'SDWebImage'
+
 end
