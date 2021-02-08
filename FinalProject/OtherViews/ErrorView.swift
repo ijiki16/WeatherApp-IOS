@@ -1,5 +1,5 @@
 //
-//  ForecastTableHeader.swift
+//  ErrorView.swift
 //  FinalProject
 //
 //  Created by Iuri Jikidze on 2/8/21.
@@ -7,12 +7,8 @@
 
 import UIKit
 
-class ForecastTableHeader: UITableViewHeaderFooterView {
+class ErrorView: UIView {
 
-
-    @IBOutlet weak var mainView: UIView!
-    @IBOutlet weak var day: UILabel!
-    
     /*
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
@@ -20,9 +16,5 @@ class ForecastTableHeader: UITableViewHeaderFooterView {
         // Drawing code
     }
     */
-    override func awakeFromNib() {
-        self.tintColor = .clear
-        self.backgroundView?.backgroundColor = .clear
-    }
 
 }

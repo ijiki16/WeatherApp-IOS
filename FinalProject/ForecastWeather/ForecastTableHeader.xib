@@ -18,7 +18,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="414" height="70"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FRIDAY" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2BR-Sg-5oc">
-                            <rect key="frame" x="20" y="0.0" width="394" height="70"/>
+                            <rect key="frame" x="13" y="0.0" width="401" height="70"/>
                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
                             <color key="textColor" name="AccentColor"/>
                             <nil key="highlightedColor"/>
@@ -26,7 +26,7 @@
                     </subviews>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="2BR-Sg-5oc" secondAttribute="trailing" id="1ud-DG-7e9"/>
-                        <constraint firstItem="2BR-Sg-5oc" firstAttribute="leading" secondItem="zM9-RC-wwh" secondAttribute="leading" constant="20" id="IhB-vg-AI9"/>
+                        <constraint firstItem="2BR-Sg-5oc" firstAttribute="leading" secondItem="zM9-RC-wwh" secondAttribute="leading" constant="13" id="IhB-vg-AI9"/>
                         <constraint firstItem="2BR-Sg-5oc" firstAttribute="top" secondItem="zM9-RC-wwh" secondAttribute="top" id="Osl-td-boc"/>
                         <constraint firstAttribute="bottom" secondItem="2BR-Sg-5oc" secondAttribute="bottom" id="jbl-Ms-YlH"/>
                     </constraints>
@@ -44,7 +44,7 @@
                 <outlet property="day" destination="2BR-Sg-5oc" id="jba-vQ-vba"/>
                 <outlet property="mainView" destination="zM9-RC-wwh" id="UUg-RH-lgH"/>
             </connections>
-            <point key="canvasLocation" x="-78.260869565217391" y="-51.5625"/>
+            <point key="canvasLocation" x="-245" y="-44"/>
         </view>
     </objects>
     <resources>

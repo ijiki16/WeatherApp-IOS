@@ -15,7 +15,12 @@ class ForecastController: UIViewController, CLLocationManagerDelegate, UITableVi
     private let serivce = Service()
     private let formatter = DateFormatter()
     private var forecastData: [dayForecast] = []
-    private let tableView = UITableView()
+    private var tableView = UITableView()
+    private var blur = UIVisualEffectView(effect: UIBlurEffect(style: .light))
+    // coordinates
+    private var latitude = "0"
+    private var longitude = "0"
+    
     let gradientLayer: CAGradientLayer = {
         let layer = CAGradientLayer()
         layer.colors = [
@@ -31,11 +36,12 @@ class ForecastController: UIViewController, CLLocationManagerDelegate, UITableVi
         setupNavBar()
         // gradient
         gradientLayer.frame = view.bounds
+        tableView = UITableView(frame: view.bounds, style: .grouped)
         self.view.layer.addSublayer(gradientLayer)
         //
         getLocationPermison()
         setupTableView()
-        
+        loadStart()
     }
     
     override func viewDidLayoutSubviews() {
@@ -82,13 +88,46 @@ class ForecastController: UIViewController, CLLocationManagerDelegate, UITableVi
         
     }
     
+    func loadStart(){
+        let alert = UIAlertController(title: nil, message: "", preferredStyle: .alert)
+        let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 30, height: 50))
+        DispatchQueue.main.async {
+            self.blur.frame = self.view.bounds
+            self.view.addSubview(self.blur)
+            loadingIndicator.hidesWhenStopped = true
+            loadingIndicator.startAnimating();
+            alert.view.addSubview(loadingIndicator)
+            self.present(alert, animated: true, completion: nil)
+        }
+        
+    }
+    
+    func loadEnd(){
+        DispatchQueue.main.async {
+            self.blur.removeFromSuperview()
+            self.dismiss(animated: true, completion: nil)
+        }
+    }
+    
     @objc func refersh() {
-        print("refresh Forecast")
+//        print("refresh Forecast")
+        forecastData.removeAll()
+        loadStart()
+        getDataFromAPI()
     }
     
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        serivce.getFocastData(lat: String((manager.location?.coordinate.latitude)!), lon: String((manager.location?.coordinate.longitude)!)){ result in
+        
+        self.latitude = String((manager.location?.coordinate.latitude)!)
+        self.longitude = String((manager.location?.coordinate.longitude)!)
+        getDataFromAPI()
+                              
+        
+    }
+    
+    func getDataFromAPI(){
+        serivce.getFocastData(lat: self.latitude, lon: self.longitude){ result in
             switch result{
             case .success(let apiData):
                 
@@ -113,6 +152,7 @@ class ForecastController: UIViewController, CLLocationManagerDelegate, UITableVi
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
                 }
+                self.loadEnd()
             case .failure(let error):
                 print(error)
             }
@@ -133,6 +173,7 @@ class ForecastController: UIViewController, CLLocationManagerDelegate, UITableVi
         //        header.backgroundView?.backgroundColor = .clear
         //        header.mainView.backgroundColor = .clear
         //        header.day.backgroundColor = .clear
+        
         header.day.text = self.forecastData[section].dayName
         
         return header
