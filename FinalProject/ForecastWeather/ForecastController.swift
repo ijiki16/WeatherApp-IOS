@@ -92,7 +92,8 @@ class ForecastController: UIViewController, CLLocationManagerDelegate, UITableVi
         let alert = UIAlertController(title: nil, message: "", preferredStyle: .alert)
         let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 30, height: 50))
         DispatchQueue.main.async {
-            self.blur.frame = self.view.bounds
+//            self.blur.frame = self.view.bounds
+            self.tableView.isHidden = true
             self.view.addSubview(self.blur)
             loadingIndicator.hidesWhenStopped = true
             loadingIndicator.startAnimating();
@@ -104,8 +105,10 @@ class ForecastController: UIViewController, CLLocationManagerDelegate, UITableVi
     
     func loadEnd(){
         DispatchQueue.main.async {
-            self.blur.removeFromSuperview()
+            
+//            self.blur.removeFromSuperview()
             self.dismiss(animated: true, completion: nil)
+            self.tableView.isHidden = false
         }
     }
     
