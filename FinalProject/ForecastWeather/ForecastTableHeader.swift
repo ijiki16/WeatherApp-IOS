@@ -9,6 +9,10 @@ import UIKit
 
 class ForecastTableHeader: UITableViewHeaderFooterView {
 
+
+    @IBOutlet weak var mainView: UIView!
+    @IBOutlet weak var day: UILabel!
+    
     /*
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.

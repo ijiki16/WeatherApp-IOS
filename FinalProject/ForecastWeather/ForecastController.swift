@@ -13,7 +13,8 @@ class ForecastController: UIViewController, CLLocationManagerDelegate, UITableVi
     
     private var locationManager : CLLocationManager!
     private let serivce = Service()
-    private var forecastData = [rowData]()
+    private let formatter = DateFormatter()
+    private var forecastData: [dayForecast] = []
     private let tableView = UITableView()
     let gradientLayer: CAGradientLayer = {
         let layer = CAGradientLayer()
@@ -31,72 +32,10 @@ class ForecastController: UIViewController, CLLocationManagerDelegate, UITableVi
         // gradient
         gradientLayer.frame = view.bounds
         self.view.layer.addSublayer(gradientLayer)
-        // Table View
+        //
         getLocationPermison()
         setupTableView()
         
-        
-        
-    }
-    
-    func getLocationPermison(){
-        locationManager = CLLocationManager()
-        locationManager.delegate = self
-        locationManager.requestAlwaysAuthorization()
-//        locationManager.requestLocation()
-//        locationManager.desiredAccuracy = kCLLocationAccuracyKilometer
-        locationManager.startUpdatingLocation()
-    }
-    
-    func setupTableView() {
-        view.addSubview(tableView)
-        tableView.backgroundColor = .clear
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        //
-        tableView.topAnchor.constraint(equalTo:view.safeAreaLayoutGuide.topAnchor).isActive = true
-        tableView.leadingAnchor.constraint(equalTo:view.safeAreaLayoutGuide.leadingAnchor).isActive = true
-        tableView.trailingAnchor.constraint(equalTo:view.safeAreaLayoutGuide.trailingAnchor).isActive = true
-        tableView.bottomAnchor.constraint(equalTo:view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        //
-        tableView.register(UINib(nibName: "ForecastTableCell", bundle: nil), forCellReuseIdentifier: "ForecastTableCell")
-        tableView.delegate = self
-        tableView.dataSource = self
-        
-    }
-    
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.forecastData.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ForecastTableCell", for: indexPath)
-        if let forcastrow = cell as? ForecastTableCell{
-            
-            let curentRow = self.forecastData[indexPath.row]
-//            print(indexPath)
-//            print(curentRow)
-            // temp
-            let temperature = round(curentRow.main.temp - 273.15)
-            forcastrow.temp.text = String(temperature) + "˚C"
-            // weather
-            forcastrow.weather.text = curentRow.weather[0].main
-            // date
-            let date = curentRow.dt_txt
-            let index = date.firstIndex(of: " ")!
-            let index1 = date.index(index, offsetBy: 1)
-            let index2 = date.index(index, offsetBy: 5)
-            let firstSentence = date[index1...index2]
-            forcastrow.clock.text = String(firstSentence)
-            // icon
-            let iconId = curentRow.weather[0].icon
-            let urlString = "https://openweathermap.org/img/wn/"+iconId+"@2x.png"
-            forcastrow.icon.sd_setImage(with: URL(string: urlString), completed: nil)
-
-            
-        }
-        cell.backgroundColor = UIColor.clear
-        return cell
     }
     
     override func viewDidLayoutSubviews() {
@@ -116,6 +55,33 @@ class ForecastController: UIViewController, CLLocationManagerDelegate, UITableVi
                                                                 action: #selector(refersh))
     }
     
+    func getLocationPermison(){
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.requestAlwaysAuthorization()
+        //        locationManager.requestLocation()
+        //        locationManager.desiredAccuracy = kCLLocationAccuracyKilometer
+        locationManager.startUpdatingLocation()
+    }
+    
+    
+    func setupTableView() {
+        view.addSubview(tableView)
+        tableView.backgroundColor = .clear
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        //
+        tableView.topAnchor.constraint(equalTo:view.safeAreaLayoutGuide.topAnchor).isActive = true
+        tableView.leadingAnchor.constraint(equalTo:view.safeAreaLayoutGuide.leadingAnchor).isActive = true
+        tableView.trailingAnchor.constraint(equalTo:view.safeAreaLayoutGuide.trailingAnchor).isActive = true
+        tableView.bottomAnchor.constraint(equalTo:view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        //
+        tableView.register(UINib(nibName: "ForecastTableCell", bundle: nil), forCellReuseIdentifier: "ForecastTableCell")
+        tableView.register(UINib(nibName: "ForecastTableHeader", bundle: nil), forHeaderFooterViewReuseIdentifier: "ForecastTableHeader")
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+    }
+    
     @objc func refersh() {
         print("refresh Forecast")
     }
@@ -124,9 +90,26 @@ class ForecastController: UIViewController, CLLocationManagerDelegate, UITableVi
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         serivce.getFocastData(lat: String((manager.location?.coordinate.latitude)!), lon: String((manager.location?.coordinate.longitude)!)){ result in
             switch result{
-            case .success(let data):
+            case .success(let apiData):
+                
                 self.forecastData.removeAll()
-                self.forecastData = data
+                
+                for forecast in apiData {
+                    let day = self.formatter.weekdaySymbols[forecast.getDayIndex()]
+                    
+                    if self.forecastData.isEmpty || self.forecastData[self.forecastData.count-1].dayName != day {
+                        self.forecastData.append(dayForecast(dayName: day, cells: [cellData]()))
+                    }
+                    
+                    self.forecastData[self.forecastData.count-1].cells.append(
+                        cellData(
+                            icon: forecast.weather[0].icon,
+                            time: forecast.getTime(),
+                            temp: String(round(forecast.main.temp - 273.15)) + "˚C",
+                            weather: forecast.weather[0].description)
+                    )
+                }
+                
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
                 }
@@ -134,6 +117,45 @@ class ForecastController: UIViewController, CLLocationManagerDelegate, UITableVi
                 print(error)
             }
         }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 50
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int{
+        return self.forecastData.count
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "ForecastTableHeader") as! ForecastTableHeader
+        //        header.backgroundColor = .red
+        //        header.backgroundView?.backgroundColor = .clear
+        //        header.mainView.backgroundColor = .clear
+        //        header.day.backgroundColor = .clear
+        header.day.text = self.forecastData[section].dayName
+        
+        return header
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.forecastData[section].cells.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ForecastTableCell", for: indexPath)
+        if let forcastrow = cell as? ForecastTableCell{
+            
+            let curCell = self.forecastData[indexPath.section].cells[indexPath.row]
+            // set data
+            forcastrow.temp.text = curCell.temp
+            forcastrow.weather.text = curCell.weather
+            forcastrow.clock.text = curCell.time
+            let urlString = "https://openweathermap.org/img/wn/"+curCell.icon+"@2x.png"
+            forcastrow.icon.sd_setImage(with: URL(string: urlString), completed: nil)
+        }
+        cell.backgroundColor = UIColor.clear
+        return cell
     }
 }
 
