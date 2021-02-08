@@ -89,7 +89,8 @@ class ForecastController: UIViewController, CLLocationManagerDelegate, UITableVi
             let firstSentence = date[index1...index2]
             forcastrow.clock.text = String(firstSentence)
             // icon
-            let urlString = "https://openweathermap.org/img/wn/10d@2x.png"
+            let iconId = curentRow.weather[0].icon
+            let urlString = "https://openweathermap.org/img/wn/"+iconId+"@2x.png"
             forcastrow.icon.sd_setImage(with: URL(string: urlString), completed: nil)
 
             
@@ -121,11 +122,7 @@ class ForecastController: UIViewController, CLLocationManagerDelegate, UITableVi
     
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-//        guard let cordinate = manager.location?.coordinate else { return <#default value#> }
-//        let locString = placemarks.count ? [placemarks.firstObject, locality] : "Not Found"
-//        print("Lat =  \(String(describing: cordinate?.latitude)), Log = \(String(describing: cordinate?.longitude))")
-//        serivce.getFocastData(lat: String(cordinate.latitude), lon: String(cordinate.longitude))
-        serivce.getFocastData(lat: "41.7646", lon: "44.754"){ result in
+        serivce.getFocastData(lat: String((manager.location?.coordinate.latitude)!), lon: String((manager.location?.coordinate.longitude)!)){ result in
             switch result{
             case .success(let data):
                 self.forecastData.removeAll()
@@ -133,11 +130,9 @@ class ForecastController: UIViewController, CLLocationManagerDelegate, UITableVi
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
                 }
-//                print(data)
             case .failure(let error):
                 print(error)
             }
-            
         }
     }
 }
