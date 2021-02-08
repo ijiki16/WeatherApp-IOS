@@ -71,9 +71,24 @@ class ForecastController: UIViewController, CLLocationManagerDelegate, UITableVi
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ForecastTableCell", for: indexPath)
         if let forcastrow = cell as? ForecastTableCell{
+            
+            let curentRow = self.forecastData[indexPath.row]
             print(indexPath)
-            print(self.forecastData[indexPath.row])
-            forcastrow.temp.text = String(round(self.forecastData[indexPath.row].main.temp - 273.15)) + "˚C"
+            print(curentRow)
+            // temp
+            let temperature = round(curentRow.main.temp - 273.15)
+            forcastrow.temp.text = String(temperature) + "˚C"
+            // weather
+            forcastrow.weather.text = curentRow.weather[0].main
+            // date
+            let date = curentRow.dt_txt
+            let index = date.firstIndex(of: " ")!
+            let index1 = date.index(index, offsetBy: 1)
+            let index2 = date.index(index, offsetBy: 5)
+            let firstSentence = date[index1...index2]
+            forcastrow.clock.text = String(firstSentence)
+            // icon
+            
         }
         cell.backgroundColor = UIColor.clear
         return cell

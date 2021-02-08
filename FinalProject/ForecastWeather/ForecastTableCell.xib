@@ -32,19 +32,38 @@
                         <color key="textColor" name="AccentColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="01:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vCL-vf-MFX">
+                        <rect key="frame" x="75" y="10" width="43" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Broken Clouds" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rrh-BG-2TC">
+                        <rect key="frame" x="75" y="38" width="111" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="highlightedColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="gz1-6o-Dg1" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="1FV-qH-QHs"/>
                     <constraint firstAttribute="trailing" secondItem="gz1-6o-Dg1" secondAttribute="trailing" constant="30" id="8pb-7z-4Pv"/>
                     <constraint firstItem="p8M-k3-09b" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="3" id="CAa-a3-SgX"/>
+                    <constraint firstItem="rrh-BG-2TC" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="75" id="PKF-QP-ly1"/>
+                    <constraint firstAttribute="bottom" secondItem="rrh-BG-2TC" secondAttribute="bottom" constant="11" id="fTx-fY-c4q"/>
+                    <constraint firstItem="vCL-vf-MFX" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="gWC-Qa-tsT"/>
                     <constraint firstItem="p8M-k3-09b" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="3" id="h9W-DA-pVb"/>
+                    <constraint firstItem="vCL-vf-MFX" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="75" id="hz8-rd-HL9"/>
                     <constraint firstItem="gz1-6o-Dg1" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="oaH-lz-3co"/>
                     <constraint firstItem="p8M-k3-09b" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="pEL-HH-mFC"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="clock" destination="vCL-vf-MFX" id="lie-hm-cyo"/>
+                <outlet property="icon" destination="p8M-k3-09b" id="zYl-Tp-joq"/>
                 <outlet property="temp" destination="gz1-6o-Dg1" id="GyS-jO-05K"/>
+                <outlet property="weather" destination="rrh-BG-2TC" id="CRM-KX-c6D"/>
             </connections>
             <point key="canvasLocation" x="140.57971014492756" y="124.55357142857142"/>
         </tableViewCell>

@@ -10,6 +10,9 @@ import UIKit
 class ForecastTableCell: UITableViewCell {
     
     @IBOutlet weak var temp: UILabel!
+    @IBOutlet weak var clock: UILabel!
+    @IBOutlet weak var weather: UILabel!
+    @IBOutlet weak var icon: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
