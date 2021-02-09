@@ -11,29 +11,56 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="NBk-Ds-gfc" customClass="CardView" customModule="FinalProject" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="335" height="448"/>
+            <rect key="frame" x="0.0" y="0.0" width="388" height="574"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="01q-CP-6cM">
-                <rect key="frame" x="0.0" y="0.0" width="335" height="448"/>
+                <rect key="frame" x="0.0" y="0.0" width="388" height="574"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LO3-Gp-8sr">
-                        <rect key="frame" x="0.0" y="0.0" width="335" height="448"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zOB-pQ-Pr6">
+                        <rect key="frame" x="0.0" y="0.0" width="388" height="574"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WCc-fx-DBA">
+                                <rect key="frame" x="74" y="286.5" width="240" height="1"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="3pM-BI-L7o"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wzj-C4-gue">
+                                <rect key="frame" x="193.5" y="115" width="1" height="344"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="1" id="dcj-eG-1Iw"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Wzj-C4-gue" firstAttribute="centerY" secondItem="zOB-pQ-Pr6" secondAttribute="centerY" id="Dz4-wL-1qg"/>
+                            <constraint firstItem="WCc-fx-DBA" firstAttribute="width" secondItem="zOB-pQ-Pr6" secondAttribute="width" multiplier="0.618557" id="Fpf-LR-eer"/>
+                            <constraint firstItem="WCc-fx-DBA" firstAttribute="centerY" secondItem="zOB-pQ-Pr6" secondAttribute="centerY" id="anE-m3-jNG"/>
+                            <constraint firstItem="Wzj-C4-gue" firstAttribute="height" secondItem="zOB-pQ-Pr6" secondAttribute="height" multiplier="0.6" id="jli-h1-UCT"/>
+                            <constraint firstItem="Wzj-C4-gue" firstAttribute="centerX" secondItem="zOB-pQ-Pr6" secondAttribute="centerX" id="olz-ic-4PP"/>
+                            <constraint firstItem="WCc-fx-DBA" firstAttribute="centerX" secondItem="zOB-pQ-Pr6" secondAttribute="centerX" id="tD2-dW-nkA"/>
+                        </constraints>
                     </view>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="LO3-Gp-8sr" secondAttribute="trailing" id="0vB-zF-Ogh"/>
-                    <constraint firstAttribute="bottom" secondItem="LO3-Gp-8sr" secondAttribute="bottom" id="3FC-qa-PnY"/>
-                    <constraint firstItem="LO3-Gp-8sr" firstAttribute="leading" secondItem="01q-CP-6cM" secondAttribute="leading" id="M4t-Vx-MGo"/>
-                    <constraint firstItem="LO3-Gp-8sr" firstAttribute="top" secondItem="01q-CP-6cM" secondAttribute="top" id="dxl-DD-WT5"/>
+                    <constraint firstItem="zOB-pQ-Pr6" firstAttribute="leading" secondItem="01q-CP-6cM" secondAttribute="leading" id="51G-oJ-hVx"/>
+                    <constraint firstItem="zOB-pQ-Pr6" firstAttribute="top" secondItem="01q-CP-6cM" secondAttribute="top" id="ZHO-0h-uFu"/>
+                    <constraint firstAttribute="bottom" secondItem="zOB-pQ-Pr6" secondAttribute="bottom" id="jAw-xL-0OK"/>
+                    <constraint firstAttribute="trailing" secondItem="zOB-pQ-Pr6" secondAttribute="trailing" id="n7t-UK-1fc"/>
                 </constraints>
             </collectionViewCellContentView>
-            <size key="customSize" width="335" height="448"/>
+            <size key="customSize" width="388" height="574"/>
             <connections>
-                <outlet property="mainView" destination="LO3-Gp-8sr" id="0bh-SW-3ki"/>
+                <outlet property="childView" destination="zOB-pQ-Pr6" id="yN9-Xu-8xw"/>
+                <outlet property="line1" destination="WCc-fx-DBA" id="pzX-On-BAr"/>
+                <outlet property="line2" destination="Wzj-C4-gue" id="bpJ-lb-qif"/>
+                <outlet property="mainView" destination="01q-CP-6cM" id="Pd3-EW-nmT"/>
             </connections>
-            <point key="canvasLocation" x="-464.49275362318843" y="133.25892857142856"/>
+            <point key="canvasLocation" x="-710" y="135"/>
         </collectionViewCell>
     </objects>
     <resources>

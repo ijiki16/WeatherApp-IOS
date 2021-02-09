@@ -254,9 +254,9 @@ class TodayController: UIViewController, CLLocationManagerDelegate, UICollection
 //        if indexPath.section%2 == 1 {
 //            curCell.mainView.backgroundColor = .green
 //        }
-        if indexPath.row%2 == 1 {
-            curCell.mainView.backgroundColor = .green
-        }
+//        if indexPath.row%2 == 1 {
+//            curCell.mainView.backgroundColor = .green
+//        }
         
         return curCell
     }
