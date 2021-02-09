@@ -8,6 +8,7 @@
 import UIKit
 import CoreLocation
 import SDWebImage
+import NVActivityIndicatorView
 
 class ForecastController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource {
     
@@ -89,17 +90,37 @@ class ForecastController: UIViewController, CLLocationManagerDelegate, UITableVi
     }
     
     func loadStart(){
-        let alert = UIAlertController(title: nil, message: "", preferredStyle: .alert)
-        let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 30, height: 50))
-        DispatchQueue.main.async {
-//            self.blur.frame = self.view.bounds
-            self.tableView.isHidden = true
-            self.view.addSubview(self.blur)
-            loadingIndicator.hidesWhenStopped = true
-            loadingIndicator.startAnimating();
-            alert.view.addSubview(loadingIndicator)
-            self.present(alert, animated: true, completion: nil)
+        self.tableView.isHidden = true
+//        print("movida aq")
+        let loader = NVActivityIndicatorView(frame: .zero, type: .lineSpinFadeLoader, color: .yellow, padding: 0)
+        loader.translatesAutoresizingMaskIntoConstraints = false
+//        loader.widthAnchor.constraint(equalToConstant: 40)
+        self.view.addSubview(loader)
+        NSLayoutConstraint.activate([
+            loader.widthAnchor.constraint(equalToConstant: 40),
+            loader.heightAnchor.constraint(equalToConstant: 40),
+            loader.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            loader.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            
+        ])
+        
+        loader.startAnimating()
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
+            loader.stopAnimating()
+            loader.isHidden = true
+            self.tableView.isHidden = false
         }
+
+        //        let alert = UIAlertController(title: nil, message: "", preferredStyle: .alert)
+        //        let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 30, height: 50))
+//        DispatchQueue.main.async {
+//            self.blur.frame = self.view.bounds
+//            self.view.addSubview(self.blur)
+//            loadingIndicator.hidesWhenStopped = true
+//            loadingIndicator.startAnimating();
+//            alert.view.addSubview(loadingIndicator)
+//            self.present(loader, animated: true, completion: nil)
+//        }
         
     }
     

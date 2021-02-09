@@ -1,18 +1,24 @@
 PODS:
+  - NVActivityIndicatorView (5.1.1):
+    - NVActivityIndicatorView/Base (= 5.1.1)
+  - NVActivityIndicatorView/Base (5.1.1)
   - SDWebImage (5.10.4):
     - SDWebImage/Core (= 5.10.4)
   - SDWebImage/Core (5.10.4)
 
 DEPENDENCIES:
+  - NVActivityIndicatorView
   - SDWebImage
 
 SPEC REPOS:
   trunk:
+    - NVActivityIndicatorView
     - SDWebImage
 
 SPEC CHECKSUMS:
+  NVActivityIndicatorView: 1f6c5687f1171810aa27a3296814dc2d7dec3667
   SDWebImage: c666b97e1fa9c64b4909816a903322018f0a9c84
 
-PODFILE CHECKSUM: 83ae9c13e82e871e91b414051ebfb36cb0ad7f55
+PODFILE CHECKSUM: 6abd96af65cd548b0efae1e175c74d5223532c2d
 
 COCOAPODS: 1.10.1

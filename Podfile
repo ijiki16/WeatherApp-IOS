@@ -8,5 +8,6 @@ target 'FinalProject' do
   # Pods for FinalProject
 
 pod 'SDWebImage'
+pod 'NVActivityIndicatorView'
 
 end
