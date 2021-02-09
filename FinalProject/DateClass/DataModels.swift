@@ -114,6 +114,8 @@ struct dayData {
     var humidity: String
     var windSpeed: String
     var windDirection: String
+    // isCurrentLocationData
+    var curLocation: Bool
 }
 
 

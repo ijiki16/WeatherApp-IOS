@@ -36,11 +36,9 @@ class TodayController: UIViewController, CLLocationManagerDelegate {
         self.view.layer.addSublayer(gradientLayer)
         //
         getLocationPermison()
-        getDataFromAPI2(city: "Kutaisi")
-        getDataFromAPI2(city: "Tbilisi")
-        getDataFromAPI2(city: "Batumi")
-        getDataFromAPI2(city: "Kutaisi")
-        getDataFromAPI2(city: "Kutaisi")
+        getDataFromAPI2(city: "Kutaisi", isCurLoc: false)
+        getDataFromAPI2(city: "Tbilisi", isCurLoc: false)
+        getDataFromAPI2(city: "Batumi", isCurLoc: false)
     }
     
     override func viewDidLayoutSubviews() {
@@ -154,10 +152,10 @@ class TodayController: UIViewController, CLLocationManagerDelegate {
                         cloudiness: String(round(apiData.clouds.all)) + " %", //"75%",
                         humidity: String(round(apiData.main.humidity)) + " mm", //"93 mm",
                         windSpeed: String(round(apiData.wind.speed)) + " km/h", //"1.03 km/h",
-                        windDirection: Direction(apiData.wind.deg).description //"W"
+                        windDirection: Direction(apiData.wind.deg).description, //"W"
+                        curLocation: true
                     )
                 )
-//                print(self.todayData)
                 print(self.todayData)
                 print("--------------------")
                 DispatchQueue.main.async {
@@ -170,7 +168,7 @@ class TodayController: UIViewController, CLLocationManagerDelegate {
         }
     }
     
-    func getDataFromAPI2(city: String){
+    func getDataFromAPI2(city: String, isCurLoc : Bool){
         serivce.getTodayDatabyCity(cityName: city){ result in
             switch result{
             case .success(let apiData):
@@ -195,7 +193,8 @@ class TodayController: UIViewController, CLLocationManagerDelegate {
                         cloudiness: String(round(apiData.clouds.all)) + " %", //"75%",
                         humidity: String(round(apiData.main.humidity)) + " mm", //"93 mm",
                         windSpeed: String(round(apiData.wind.speed)) + " km/h", //"1.03 km/h",
-                        windDirection: Direction(apiData.wind.deg).description //"W"
+                        windDirection: Direction(apiData.wind.deg).description, //"W"
+                        curLocation: isCurLoc
                     )
                 )
                 
