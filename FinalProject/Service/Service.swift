@@ -94,6 +94,43 @@ class Service {
         }
     }
     
+    func getTodayDatabyCity(cityName: String = "Tbilisi",  completion: @escaping (Result<TodayData, Error >) -> ()){
+        
+        components.path = "/data/2.5/weather"
+        
+        let parameters = [
+            "appid" : apiKey,
+            "q" : cityName,
+        ]
+        
+        components.queryItems = parameters.map{ key, value in return URLQueryItem(name: key, value: value) }
+         
+        if let url = components.url{
+            let request = URLRequest(url: url)
+
+            let task = URLSession.shared.dataTask(with: request) { (data, response, SesionError) in
+
+                if let error = SesionError{
+                    completion(.failure(error))
+                    return
+                }
+
+                if let data = data{
+                    let decoder = JSONDecoder()
+                    do {
+                        let reuslt = try decoder.decode(TodayData.self, from: data)
+                        completion(.success(reuslt))
+                    }catch{
+                        completion(.failure(error))
+                    }
+                }
+            }
+            task.resume()
+        }else{
+            completion(.failure(ServiceError.invalidPatameters))
+        }
+    }
+    
     enum ServiceError: Error{
         case noData
         case invalidPatameters

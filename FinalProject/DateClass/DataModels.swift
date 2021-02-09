@@ -16,6 +16,8 @@ struct TodayData : Codable {
     let wind : Wind
     let main : Temp
     let coord : Coordinates
+    let clouds : Clouds
+    let sys : Sys
 }
 
 struct Coordinates : Codable {
@@ -25,9 +27,18 @@ struct Coordinates : Codable {
 
 struct Wind : Codable{
     let speed: Double
-    let deg: Int
+    let deg: Double
 }
 
+struct Sys : Codable{
+    let type : Int
+    let id : Int
+    let country : String
+}
+
+struct Clouds : Codable {
+    let all : Double
+}
 // ForecastData
 
 struct ForecastData : Codable{ 
@@ -68,6 +79,7 @@ extension rowData {
 
 struct Temp : Codable{
     let temp: Double
+    let humidity: Double
 }
 struct Weather : Codable {
     let id: Int
@@ -93,11 +105,29 @@ struct cellData {
 // new Data models for today
 
 struct dayData {
+    var id : String
     var cityName: String
     var countryName: String
     var temp: String
     var weather: String
     var cloudiness: String
     var humidity: String
+    var windSpeed: String
     var windDirection: String
+}
+
+
+enum Direction: String {
+    case n, nne, ne, ene, e, ese, se, sse, s, ssw, sw, wsw, w, wnw, nw, nnw
+}
+
+extension Direction: CustomStringConvertible  {
+    static let all: [Direction] = [.n, .nne, .ne, .ene, .e, .ese, .se, .sse, .s, .ssw, .sw, .wsw, .w, .wnw, .nw, .nnw]
+    init(_ direction: Double) {
+        let index = Int((direction + 11.25).truncatingRemainder(dividingBy: 360) / 22.5)
+        self = Direction.all[index]
+    }
+    var description: String {
+        return rawValue.uppercased()
+    }
 }
