@@ -22,7 +22,7 @@ class ForecastController: UIViewController, CLLocationManagerDelegate, UITableVi
     private var latitude = "0"
     private var longitude = "0"
     
-    let gradientLayer: CAGradientLayer = {
+    private let gradientLayer: CAGradientLayer = {
         let layer = CAGradientLayer()
         layer.colors = [
             UIColor(named: "bg-gradient-start")?.cgColor ?? UIColor.blue.cgColor ,
@@ -37,7 +37,6 @@ class ForecastController: UIViewController, CLLocationManagerDelegate, UITableVi
         setupNavBar()
         // gradient
         gradientLayer.frame = view.bounds
-        tableView = UITableView(frame: view.bounds, style: .grouped)
         self.view.layer.addSublayer(gradientLayer)
         //
         getLocationPermison()
@@ -66,13 +65,13 @@ class ForecastController: UIViewController, CLLocationManagerDelegate, UITableVi
         locationManager = CLLocationManager()
         locationManager.delegate = self
         locationManager.requestAlwaysAuthorization()
-        //        locationManager.requestLocation()
         //        locationManager.desiredAccuracy = kCLLocationAccuracyKilometer
         locationManager.startUpdatingLocation()
     }
     
     
     func setupTableView() {
+        tableView = UITableView(frame: view.bounds, style: .grouped)
         view.addSubview(tableView)
         tableView.backgroundColor = .clear
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -92,7 +91,7 @@ class ForecastController: UIViewController, CLLocationManagerDelegate, UITableVi
     func loadStart(){
         self.tableView.isHidden = true
 //        print("movida aq")
-        let loader = NVActivityIndicatorView(frame: .zero, type: .lineSpinFadeLoader, color: .yellow, padding: 0)
+        let loader = NVActivityIndicatorView(frame: .zero, type: .lineSpinFadeLoader, color:UIColor(named: "AccentColor") ?? .yellow, padding: 0)
         loader.translatesAutoresizingMaskIntoConstraints = false
 //        loader.widthAnchor.constraint(equalToConstant: 40)
         self.view.addSubview(loader)
@@ -105,7 +104,7 @@ class ForecastController: UIViewController, CLLocationManagerDelegate, UITableVi
         ])
         
         loader.startAnimating()
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.3) {
             loader.stopAnimating()
             loader.isHidden = true
             self.tableView.isHidden = false
@@ -193,10 +192,6 @@ class ForecastController: UIViewController, CLLocationManagerDelegate, UITableVi
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "ForecastTableHeader") as! ForecastTableHeader
-        //        header.backgroundColor = .red
-        //        header.backgroundView?.backgroundColor = .clear
-        //        header.mainView.backgroundColor = .clear
-        //        header.day.backgroundColor = .clear
         
         header.day.text = self.forecastData[section].dayName
         

@@ -9,7 +9,28 @@ import Foundation
 
 // API data models
 
-struct ForcastData : Codable{ 
+struct TodayData : Codable {
+    let id : Int
+    let name : String
+    let weather : [Weather]
+    let wind : Wind
+    let main : Temp
+    let coord : Coordinates
+}
+
+struct Coordinates : Codable {
+    let lon : Double
+    let lat : Double
+}
+
+struct Wind : Codable{
+    let speed: Double
+    let deg: Int
+}
+
+// ForecastData
+
+struct ForecastData : Codable{ 
     let cod: String
     let message: Int
     let cnt: Int
@@ -18,7 +39,7 @@ struct ForcastData : Codable{
 }
 
 struct rowData : Codable {
-    let dt: Double
+    let dt : Double
     let main : Temp
     let weather : [Weather]
     let dt_txt : String
@@ -55,7 +76,7 @@ struct Weather : Codable {
     let icon: String
 }
 
-// new Data models
+// new Data models for forcast
 
 struct dayForecast{
     var dayName: String
@@ -67,4 +88,16 @@ struct cellData {
     var time: String
     var temp: String
     var weather: String
+}
+
+// new Data models for today
+
+struct dayData {
+    var cityName: String
+    var countryName: String
+    var temp: String
+    var weather: String
+    var cloudiness: String
+    var humidity: String
+    var windDirection: String
 }

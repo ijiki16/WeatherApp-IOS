@@ -25,6 +25,8 @@
 		B891D8B725C96D19006471AD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B891D8B525C96D19006471AD /* LaunchScreen.storyboard */; };
 		B899B59C25CB01C60087C531 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B899B59B25CB01C60087C531 /* SceneDelegate.swift */; };
 		B899B5A325CB03B90087C531 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B899B5A225CB03B90087C531 /* Extension.swift */; };
+		B8B8DDAF25D297D000267E17 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B8DDAE25D297D000267E17 /* CardView.swift */; };
+		B8B8DDB225D297DA00267E17 /* CardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8B8DDB125D297DA00267E17 /* CardView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +52,8 @@
 		B891D8B825C96D19006471AD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B899B59B25CB01C60087C531 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		B899B5A225CB03B90087C531 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
+		B8B8DDAE25D297D000267E17 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		B8B8DDB125D297DA00267E17 /* CardView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CardView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +134,7 @@
 		B899B5A525CB08820087C531 /* TodayWeather */ = {
 			isa = PBXGroup;
 			children = (
+				B8B8DDAD25D297B400267E17 /* CardView */,
 				B82C67E725CAA9A7001C4034 /* TodayController.swift */,
 			);
 			path = TodayWeather;
@@ -138,13 +143,38 @@
 		B899B5A625CB08910087C531 /* ForecastWeather */ = {
 			isa = PBXGroup;
 			children = (
+				B8B8DDAB25D2978800267E17 /* TableHeader */,
+				B8B8DDAA25D2977100267E17 /* TableCell */,
 				B891D8AB25C96D19006471AD /* ForecastController.swift */,
+			);
+			path = ForecastWeather;
+			sourceTree = "<group>";
+		};
+		B8B8DDAA25D2977100267E17 /* TableCell */ = {
+			isa = PBXGroup;
+			children = (
 				B84611CD25D05D94007AC37E /* ForecastTableCell.swift */,
 				B84611CE25D05D94007AC37E /* ForecastTableCell.xib */,
+			);
+			path = TableCell;
+			sourceTree = "<group>";
+		};
+		B8B8DDAB25D2978800267E17 /* TableHeader */ = {
+			isa = PBXGroup;
+			children = (
 				B88E6C5525D181950087CD32 /* ForecastTableHeader.swift */,
 				B88E6C5825D182270087CD32 /* ForecastTableHeader.xib */,
 			);
-			path = ForecastWeather;
+			path = TableHeader;
+			sourceTree = "<group>";
+		};
+		B8B8DDAD25D297B400267E17 /* CardView */ = {
+			isa = PBXGroup;
+			children = (
+				B8B8DDAE25D297D000267E17 /* CardView.swift */,
+				B8B8DDB125D297DA00267E17 /* CardView.xib */,
+			);
+			path = CardView;
 			sourceTree = "<group>";
 		};
 		BB69990DBC26B15735B15922 /* Frameworks */ = {
@@ -226,6 +256,7 @@
 				B891D8B725C96D19006471AD /* LaunchScreen.storyboard in Resources */,
 				B84611D025D05D94007AC37E /* ForecastTableCell.xib in Resources */,
 				B891D8B425C96D19006471AD /* Assets.xcassets in Resources */,
+				B8B8DDB225D297DA00267E17 /* CardView.xib in Resources */,
 				B88E6C6125D1C5920087CD32 /* ErrorView.xib in Resources */,
 				B88E6C5925D182270087CD32 /* ForecastTableHeader.xib in Resources */,
 				B891D8AF25C96D19006471AD /* Main.storyboard in Resources */,
@@ -291,6 +322,7 @@
 				B891D8B225C96D19006471AD /* FinalProject.xcdatamodeld in Sources */,
 				B82C67E825CAA9A7001C4034 /* TodayController.swift in Sources */,
 				B84611CB25CFFEB7007AC37E /* DataModels.swift in Sources */,
+				B8B8DDAF25D297D000267E17 /* CardView.swift in Sources */,
 				B88E6C5E25D1C5820087CD32 /* ErrorView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

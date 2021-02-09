@@ -20,6 +20,8 @@ class Service {
     
     func getFocastData(lat: String = "0", lon: String = "0",  completion: @escaping (Result<[rowData], Error >) -> ()){
         
+        components.path = "/data/2.5/forecast"
+        
         let parameters = [
             "appid" : apiKey,
             "lat" : lat,
@@ -41,7 +43,7 @@ class Service {
                 if let data = data{
                     let decoder = JSONDecoder()
                     do {
-                        let reuslt = try decoder.decode(ForcastData.self, from: data)
+                        let reuslt = try decoder.decode(ForecastData.self, from: data)
                         completion(.success(reuslt.list))
                     }catch{
                         completion(.failure(error))
@@ -54,6 +56,43 @@ class Service {
         }
     }
     
+    func getTodayDatabyCoord(lat: String = "0", lon: String = "0",  completion: @escaping (Result<TodayData, Error >) -> ()){
+        
+        components.path = "/data/2.5/weather"
+        
+        let parameters = [
+            "appid" : apiKey,
+            "lat" : lat,
+            "lon" : lon,
+        ]
+        
+        components.queryItems = parameters.map{ key, value in return URLQueryItem(name: key, value: value) }
+         
+        if let url = components.url{
+            let request = URLRequest(url: url)
+
+            let task = URLSession.shared.dataTask(with: request) { (data, response, SesionError) in
+
+                if let error = SesionError{
+                    completion(.failure(error))
+                    return
+                }
+
+                if let data = data{
+                    let decoder = JSONDecoder()
+                    do {
+                        let reuslt = try decoder.decode(TodayData.self, from: data)
+                        completion(.success(reuslt))
+                    }catch{
+                        completion(.failure(error))
+                    }
+                }
+            }
+            task.resume()
+        }else{
+            completion(.failure(ServiceError.invalidPatameters))
+        }
+    }
     
     enum ServiceError: Error{
         case noData
