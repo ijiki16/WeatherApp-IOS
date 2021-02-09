@@ -36,7 +36,11 @@ class TodayController: UIViewController, CLLocationManagerDelegate {
         self.view.layer.addSublayer(gradientLayer)
         //
         getLocationPermison()
-//        getDataFromAPI2(city: "Kutaisi")
+        getDataFromAPI2(city: "Kutaisi")
+        getDataFromAPI2(city: "Tbilisi")
+        getDataFromAPI2(city: "Batumi")
+        getDataFromAPI2(city: "Kutaisi")
+        getDataFromAPI2(city: "Kutaisi")
     }
     
     override func viewDidLayoutSubviews() {
@@ -110,7 +114,7 @@ class TodayController: UIViewController, CLLocationManagerDelegate {
     
     @objc func refersh() {
         print("refresh Today")
-        todayData.removeAll()
+//        todayData.removeAll()
 //        loadStart()
         getDataFromAPI1()
     }
@@ -130,13 +134,15 @@ class TodayController: UIViewController, CLLocationManagerDelegate {
             switch result{
             case .success(let apiData):
 //                print(apiData)
-                self.todayData.removeAll()
+//                self.todayData.removeAll()
                 
                 let cityID = apiData.id
                 
-//                self.todayData.contains { (dayData) -> Bool in
-//
-//                }
+                for (index, data) in self.todayData.enumerated() {
+                    if (String(cityID) == data.id) {
+                        self.todayData.remove(at: index)
+                    }
+                }
                 
                 self.todayData.append(
                     dayData(
@@ -151,17 +157,9 @@ class TodayController: UIViewController, CLLocationManagerDelegate {
                         windDirection: Direction(apiData.wind.deg).description //"W"
                     )
                 )
+//                print(self.todayData)
                 print(self.todayData)
-                
-//                self.forecastData[self.forecastData.count-1].cells.append(
-//                    cellData(
-//                        icon: forecast.weather[0].icon,
-//                        time: forecast.getTime(),
-//                        temp: String(round(forecast.main.temp - 273.15)) + "˚C",
-//                        weather: forecast.weather[0].description)
-//                )
-
-                
+                print("--------------------")
                 DispatchQueue.main.async {
 //                    self.tableView.reloadData()
                 }
@@ -176,8 +174,33 @@ class TodayController: UIViewController, CLLocationManagerDelegate {
         serivce.getTodayDatabyCity(cityName: city){ result in
             switch result{
             case .success(let apiData):
-                print(apiData)
+//                print(apiData)
 //                self.todayData.removeAll()
+                
+                let cityID = apiData.id
+                
+                for (index, data) in self.todayData.enumerated() {
+                    if (String(cityID) == data.id) {
+                        self.todayData.remove(at: index)
+                    }
+                }
+                
+                self.todayData.append(
+                    dayData(
+                        id : String(cityID),
+                        cityName: apiData.name,
+                        countryName: apiData.sys.country,
+                        temp: String(round(apiData.main.temp - 273.15)) + "˚C",
+                        weather: apiData.weather[0].description,
+                        cloudiness: String(round(apiData.clouds.all)) + " %", //"75%",
+                        humidity: String(round(apiData.main.humidity)) + " mm", //"93 mm",
+                        windSpeed: String(round(apiData.wind.speed)) + " km/h", //"1.03 km/h",
+                        windDirection: Direction(apiData.wind.deg).description //"W"
+                    )
+                )
+                
+                print(self.todayData)
+                print("--------------------")
             case .failure(let error):
                 print(error)
             }
