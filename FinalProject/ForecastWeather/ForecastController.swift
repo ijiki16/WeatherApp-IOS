@@ -18,6 +18,7 @@ class ForecastController: UIViewController, CLLocationManagerDelegate, UITableVi
     private var forecastData: [dayForecast] = []
     private var tableView = UITableView()
     private var blur = UIVisualEffectView(effect: UIBlurEffect(style: .light))
+    private var loader = NVActivityIndicatorView(frame: .zero, type: .lineSpinFadeLoader, color:UIColor(named: "AccentColor") ?? .yellow, padding: 0)
     // coordinates
     private var latitude = "0"
     private var longitude = "0"
@@ -40,8 +41,10 @@ class ForecastController: UIViewController, CLLocationManagerDelegate, UITableVi
         self.view.layer.addSublayer(gradientLayer)
         //
         getLocationPermison()
+        setupLoader()
         setupTableView()
         loadStart()
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -85,15 +88,11 @@ class ForecastController: UIViewController, CLLocationManagerDelegate, UITableVi
         tableView.register(UINib(nibName: "ForecastTableHeader", bundle: nil), forHeaderFooterViewReuseIdentifier: "ForecastTableHeader")
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.isHidden = true
         
     }
-    
-    func loadStart(){
-        self.tableView.isHidden = true
-//        print("movida aq")
-        let loader = NVActivityIndicatorView(frame: .zero, type: .lineSpinFadeLoader, color:UIColor(named: "AccentColor") ?? .yellow, padding: 0)
-        loader.translatesAutoresizingMaskIntoConstraints = false
-//        loader.widthAnchor.constraint(equalToConstant: 40)
+    func setupLoader() {
+        self.loader.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(loader)
         NSLayoutConstraint.activate([
             loader.widthAnchor.constraint(equalToConstant: 40),
@@ -102,38 +101,27 @@ class ForecastController: UIViewController, CLLocationManagerDelegate, UITableVi
             loader.centerXAnchor.constraint(equalTo: view.centerXAnchor)
             
         ])
-        
-        loader.startAnimating()
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.3) {
-            loader.stopAnimating()
-            loader.isHidden = true
-            self.tableView.isHidden = false
+        self.loader.startAnimating()
+        self.loader.isHidden = true
+    }
+    
+    func loadStart(){
+        DispatchQueue.main.async {
+            self.tableView.isHidden = true
+            self.loader.isHidden = false
         }
-
-        //        let alert = UIAlertController(title: nil, message: "", preferredStyle: .alert)
-        //        let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 30, height: 50))
-//        DispatchQueue.main.async {
-//            self.blur.frame = self.view.bounds
-//            self.view.addSubview(self.blur)
-//            loadingIndicator.hidesWhenStopped = true
-//            loadingIndicator.startAnimating();
-//            alert.view.addSubview(loadingIndicator)
-//            self.present(loader, animated: true, completion: nil)
-//        }
         
     }
     
     func loadEnd(){
         DispatchQueue.main.async {
-            
-//            self.blur.removeFromSuperview()
             self.dismiss(animated: true, completion: nil)
+            self.loader.isHidden = true
             self.tableView.isHidden = false
         }
     }
     
     @objc func refersh() {
-//        print("refresh Forecast")
         forecastData.removeAll()
         loadStart()
         getDataFromAPI()

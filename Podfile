@@ -9,5 +9,7 @@ target 'FinalProject' do
 
 pod 'SDWebImage'
 pod 'NVActivityIndicatorView'
+# pod 'CollectionViewPagingLayout'
+pod 'UPCarouselFlowLayout'
 
 end

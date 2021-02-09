@@ -7,14 +7,14 @@
 
 import UIKit
 
-class CardView: UIView {
-
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
+class CardView: UICollectionViewCell {
+    @IBOutlet weak var mainView: UIView!
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        // Initialization code
+        mainView.layer.cornerRadius = 8
+        mainView.backgroundColor = .red
     }
-    */
 
 }

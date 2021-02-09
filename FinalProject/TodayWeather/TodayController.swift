@@ -8,12 +8,21 @@
 import UIKit
 import CoreLocation
 import NVActivityIndicatorView
+//import CollectionViewPagingLayout
+import UPCarouselFlowLayout
 
-class TodayController: UIViewController, CLLocationManagerDelegate {
+class TodayController: UIViewController, CLLocationManagerDelegate, UICollectionViewDelegate, UICollectionViewDataSource {
+    
+    
     
     private var locationManager : CLLocationManager!
     private let serivce = Service()
     private var todayData: [dayData] = []
+    private var collectionView :  UICollectionView!
+    private var loader = NVActivityIndicatorView(frame: .zero, type: .lineSpinFadeLoader, color:UIColor(named: "AccentColor") ?? .yellow, padding: 0)
+    private let layout = UPCarouselFlowLayout()
+//    private let layout = CollectionViewPagingLayout()
+//    private let layout = UICollectionViewLayout()
     // coordinates
     private var latitude = "0"
     private var longitude = "0"
@@ -36,14 +45,23 @@ class TodayController: UIViewController, CLLocationManagerDelegate {
         self.view.layer.addSublayer(gradientLayer)
         //
         getLocationPermison()
-        getDataFromAPI2(city: "Kutaisi", isCurLoc: false)
-        getDataFromAPI2(city: "Tbilisi", isCurLoc: false)
-        getDataFromAPI2(city: "Batumi", isCurLoc: false)
+        setupLoader()
+        setupCollectionView()
+        loadStart()
+//        getDataFromAPI2(city: "Kutaisi", isCurLoc: false)
+//        getDataFromAPI2(city: "Tbilisi", isCurLoc: false)
+//        getDataFromAPI2(city: "Batumi", isCurLoc: false)
+        
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         gradientLayer.frame = view.bounds
+        collectionView.frame = self.view.frame
+
+        //layout.sectio
+        layout.itemSize = CGSize(width: collectionView.bounds.width * 0.7, height: collectionView.bounds.height * 0.6)
+        collectionView.collectionViewLayout = layout
     }
     
     func setupNavBar(){
@@ -66,12 +84,39 @@ class TodayController: UIViewController, CLLocationManagerDelegate {
         locationManager.startUpdatingLocation()
     }
     
-    func loadStart(){
-//        self.tableView.isHidden = true
-//        print("movida aq")
-        let loader = NVActivityIndicatorView(frame: .zero, type: .lineSpinFadeLoader, color:UIColor(named: "AccentColor") ?? .yellow, padding: 0)
-        loader.translatesAutoresizingMaskIntoConstraints = false
-//        loader.widthAnchor.constraint(equalToConstant: 40)
+    func setupCollectionView() {
+        
+        
+        // layout
+        //let layout = CollectionViewPagingLayout()
+
+        //layout.sectio
+        collectionView  =  UICollectionView(frame: view.bounds, collectionViewLayout: layout)
+        view.addSubview(collectionView)
+        layout.scrollDirection = .horizontal
+        layout.itemSize = CGSize(width: collectionView.bounds.width * 0.7, height: collectionView.bounds.height * 0.6)
+        collectionView.collectionViewLayout = layout
+        collectionView.backgroundColor = .clear
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        //
+        collectionView.topAnchor.constraint(equalTo:view.safeAreaLayoutGuide.topAnchor).isActive = true
+        collectionView.leadingAnchor.constraint(equalTo:view.safeAreaLayoutGuide.leadingAnchor).isActive = true
+        collectionView.trailingAnchor.constraint(equalTo:view.safeAreaLayoutGuide.trailingAnchor).isActive = true
+        collectionView.bottomAnchor.constraint(equalTo:view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        //
+        
+        collectionView.register( UINib(nibName: "CardView", bundle: nil), forCellWithReuseIdentifier: "CardView")
+        //        collectionView.isPagingEnabled = true // enabling paging effect
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.isPagingEnabled = true
+//        collectionView.
+//        collectionView.isScrollEnabled = true
+        
+    }
+    
+    func setupLoader() {
+        self.loader.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(loader)
         NSLayoutConstraint.activate([
             loader.widthAnchor.constraint(equalToConstant: 40),
@@ -80,40 +125,30 @@ class TodayController: UIViewController, CLLocationManagerDelegate {
             loader.centerXAnchor.constraint(equalTo: view.centerXAnchor)
             
         ])
-        
-        loader.startAnimating()
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.3) {
-            loader.stopAnimating()
-            loader.isHidden = true
-//            self.tableView.isHidden = false
+        self.loader.startAnimating()
+        self.loader.isHidden = true
+    }
+    
+    func loadStart(){
+        DispatchQueue.main.async {
+            self.collectionView.isHidden = true
+            self.loader.isHidden = false
         }
-
-        //        let alert = UIAlertController(title: nil, message: "", preferredStyle: .alert)
-        //        let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 30, height: 50))
-//        DispatchQueue.main.async {
-//            self.blur.frame = self.view.bounds
-//            self.view.addSubview(self.blur)
-//            loadingIndicator.hidesWhenStopped = true
-//            loadingIndicator.startAnimating();
-//            alert.view.addSubview(loadingIndicator)
-//            self.present(loader, animated: true, completion: nil)
-//        }
         
     }
     
     func loadEnd(){
         DispatchQueue.main.async {
-            
-//            self.blur.removeFromSuperview()
             self.dismiss(animated: true, completion: nil)
-//            self.tableView.isHidden = false
+            self.loader.isHidden = true
+            self.collectionView.isHidden = false
         }
     }
     
     @objc func refersh() {
         print("refresh Today")
-//        todayData.removeAll()
-//        loadStart()
+        //        todayData.removeAll()
+        //        loadStart()
         getDataFromAPI1()
     }
     
@@ -121,9 +156,9 @@ class TodayController: UIViewController, CLLocationManagerDelegate {
         
         self.latitude = String((manager.location?.coordinate.latitude)!)
         self.longitude = String((manager.location?.coordinate.longitude)!)
-//        print(self.latitude, self.latitude)
+        //        print(self.latitude, self.latitude)
         getDataFromAPI1()
-                              
+        
         
     }
     
@@ -131,8 +166,8 @@ class TodayController: UIViewController, CLLocationManagerDelegate {
         serivce.getTodayDatabyCoord(lat: self.latitude, lon: self.longitude){ result in
             switch result{
             case .success(let apiData):
-//                print(apiData)
-//                self.todayData.removeAll()
+                //                print(apiData)
+                //                self.todayData.removeAll()
                 
                 let cityID = apiData.id
                 
@@ -159,7 +194,7 @@ class TodayController: UIViewController, CLLocationManagerDelegate {
                 print(self.todayData)
                 print("--------------------")
                 DispatchQueue.main.async {
-//                    self.tableView.reloadData()
+                    //                    self.tableView.reloadData()
                 }
                 self.loadEnd()
             case .failure(let error):
@@ -172,8 +207,8 @@ class TodayController: UIViewController, CLLocationManagerDelegate {
         serivce.getTodayDatabyCity(cityName: city){ result in
             switch result{
             case .success(let apiData):
-//                print(apiData)
-//                self.todayData.removeAll()
+                //                print(apiData)
+                //                self.todayData.removeAll()
                 
                 let cityID = apiData.id
                 
@@ -204,5 +239,25 @@ class TodayController: UIViewController, CLLocationManagerDelegate {
                 print(error)
             }
         }
+    }
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 6
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let curCell = collectionView.dequeueReusableCell(withReuseIdentifier: "CardView", for: indexPath) as! CardView
+//        if indexPath.section%2 == 1 {
+//            curCell.mainView.backgroundColor = .green
+//        }
+        if indexPath.row%2 == 1 {
+            curCell.mainView.backgroundColor = .green
+        }
+        
+        return curCell
     }
 }

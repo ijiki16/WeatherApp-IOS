@@ -3,40 +3,42 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="CardView" customModule="FinalProject" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="329" height="526"/>
-            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-            <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r82-3F-6xV">
-                    <rect key="frame" x="0.0" y="44" width="329" height="482"/>
-                    <color key="backgroundColor" systemColor="systemGreenColor"/>
-                </view>
-            </subviews>
-            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
-            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-            <constraints>
-                <constraint firstItem="r82-3F-6xV" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="2Lg-Me-Ali"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="r82-3F-6xV" secondAttribute="trailing" id="eRz-XS-TDy"/>
-                <constraint firstItem="r82-3F-6xV" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="kZo-Wj-XQi"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="r82-3F-6xV" secondAttribute="bottom" id="mQp-9U-cWz"/>
-            </constraints>
-            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="-474.63768115942031" y="-67.633928571428569"/>
-        </view>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="NBk-Ds-gfc" customClass="CardView" customModule="FinalProject" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="335" height="448"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="01q-CP-6cM">
+                <rect key="frame" x="0.0" y="0.0" width="335" height="448"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LO3-Gp-8sr">
+                        <rect key="frame" x="0.0" y="0.0" width="335" height="448"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="LO3-Gp-8sr" secondAttribute="trailing" id="0vB-zF-Ogh"/>
+                    <constraint firstAttribute="bottom" secondItem="LO3-Gp-8sr" secondAttribute="bottom" id="3FC-qa-PnY"/>
+                    <constraint firstItem="LO3-Gp-8sr" firstAttribute="leading" secondItem="01q-CP-6cM" secondAttribute="leading" id="M4t-Vx-MGo"/>
+                    <constraint firstItem="LO3-Gp-8sr" firstAttribute="top" secondItem="01q-CP-6cM" secondAttribute="top" id="dxl-DD-WT5"/>
+                </constraints>
+            </collectionViewCellContentView>
+            <size key="customSize" width="335" height="448"/>
+            <connections>
+                <outlet property="mainView" destination="LO3-Gp-8sr" id="0bh-SW-3ki"/>
+            </connections>
+            <point key="canvasLocation" x="-464.49275362318843" y="133.25892857142856"/>
+        </collectionViewCell>
     </objects>
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemGreenColor">
-            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
