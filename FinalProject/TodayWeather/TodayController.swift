@@ -8,8 +8,6 @@
 import UIKit
 import CoreLocation
 import NVActivityIndicatorView
-//import CollectionViewPagingLayout
-import UPCarouselFlowLayout
 
 class TodayController: UIViewController, CLLocationManagerDelegate, UICollectionViewDelegate, UICollectionViewDataSource {
     
@@ -19,10 +17,11 @@ class TodayController: UIViewController, CLLocationManagerDelegate, UICollection
     private let serivce = Service()
     private var todayData: [dayData] = []
     private var collectionView :  UICollectionView!
+    private let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
     private var loader = NVActivityIndicatorView(frame: .zero, type: .lineSpinFadeLoader, color:UIColor(named: "AccentColor") ?? .yellow, padding: 0)
-    private let layout = UPCarouselFlowLayout()
-//    private let layout = CollectionViewPagingLayout()
-//    private let layout = UICollectionViewLayout()
+    //    private let layout = UPCarouselFlowLayout()
+    //    private let layout = CollectionViewPagingLayout()
+    //    private let layout = UICollectionViewLayout()
     // coordinates
     private var latitude = "0"
     private var longitude = "0"
@@ -48,20 +47,43 @@ class TodayController: UIViewController, CLLocationManagerDelegate, UICollection
         setupLoader()
         setupCollectionView()
         loadStart()
-//        getDataFromAPI2(city: "Kutaisi", isCurLoc: false)
-//        getDataFromAPI2(city: "Tbilisi", isCurLoc: false)
-//        getDataFromAPI2(city: "Batumi", isCurLoc: false)
+        //        getDataFromAPI2(city: "Kutaisi", isCurLoc: false)
+        //        getDataFromAPI2(city: "Tbilisi", isCurLoc: false)
+        //        getDataFromAPI2(city: "Batumi", isCurLoc: false)
         
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         gradientLayer.frame = view.bounds
-        collectionView.frame = self.view.frame
-
-        //layout.sectio
-        layout.itemSize = CGSize(width: collectionView.bounds.width * 0.7, height: collectionView.bounds.height * 0.6)
+//        collectionView.frame = self.view.bounds
+        super.viewWillLayoutSubviews()
+        
+        if (UIWindow.isLandscape) {
+            print("Landscape")
+            layout.sectionInset = UIEdgeInsets(top: 0, left: view.frame.width*1/10, bottom: 0, right: view.frame.width*1/10)
+            layout.scrollDirection = .horizontal
+            layout.itemSize = CGSize(width: collectionView.bounds.width * 0.8, height: collectionView.bounds.height * 0.8)
+            layout.minimumLineSpacing = view.frame.width*2/10
+        } else {
+            print("Vertical")
+            layout.sectionInset = UIEdgeInsets(top: 0, left: view.frame.width*3/20, bottom: 0, right: view.frame.width*3/20)
+            layout.scrollDirection = .horizontal
+            layout.itemSize = CGSize(width: collectionView.bounds.width * 0.7, height: collectionView.bounds.height * 0.6)
+            layout.minimumLineSpacing = view.frame.width*3/10
+        }
+        
         collectionView.collectionViewLayout = layout
+        
+        layout.invalidateLayout()
+    }
+    
+    override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
+        //        layout.sectionInset = UIEdgeInsets(top: 0, left: view.frame.width*3/20, bottom: 0, right: view.frame.width*3/20)
+        //        layout.scrollDirection = .horizontal
+        //        layout.itemSize = CGSize(width: collectionView.bounds.width * 0.7, height: collectionView.bounds.height * 0.6)
+        //        layout.minimumLineSpacing = view.frame.width*3/10
+        //        collectionView.collectionViewLayout = layout
     }
     
     func setupNavBar(){
@@ -89,14 +111,20 @@ class TodayController: UIViewController, CLLocationManagerDelegate, UICollection
         
         // layout
         //let layout = CollectionViewPagingLayout()
-
+        layout.sectionInset = UIEdgeInsets(top: 0, left: view.frame.width*3/20, bottom: 0, right: view.frame.width*3/20)
+        layout.itemSize = CGSize(width: 60, height: 60)
         //layout.sectio
         collectionView  =  UICollectionView(frame: view.bounds, collectionViewLayout: layout)
         view.addSubview(collectionView)
         layout.scrollDirection = .horizontal
+        //        layout.sectionInset = UIEdgeInsets(top: 50, left: 50, bottom: 50, right: 50);
         layout.itemSize = CGSize(width: collectionView.bounds.width * 0.7, height: collectionView.bounds.height * 0.6)
+        layout.minimumLineSpacing = view.frame.width*3/10
         collectionView.collectionViewLayout = layout
-        collectionView.backgroundColor = .clear
+        collectionView.isPagingEnabled = true
+        //        layout.itemSize = CGSize(width: collectionView.bounds.width * 0.7, height: collectionView.bounds.height * 0.6)
+        //        collectionView.collectionViewLayout = layout
+//        collectionView.backgroundColor = .clear
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         //
         collectionView.topAnchor.constraint(equalTo:view.safeAreaLayoutGuide.topAnchor).isActive = true
@@ -109,9 +137,13 @@ class TodayController: UIViewController, CLLocationManagerDelegate, UICollection
         //        collectionView.isPagingEnabled = true // enabling paging effect
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.isPagingEnabled = true
-//        collectionView.
-//        collectionView.isScrollEnabled = true
+        
+        collectionView.topAnchor.constraint(equalTo:view.safeAreaLayoutGuide.topAnchor).isActive = true
+        collectionView.leadingAnchor.constraint(equalTo:view.safeAreaLayoutGuide.leadingAnchor).isActive = true
+        collectionView.trailingAnchor.constraint(equalTo:view.safeAreaLayoutGuide.trailingAnchor).isActive = true
+        collectionView.bottomAnchor.constraint(equalTo:view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        //        collectionView.
+        //        collectionView.isScrollEnabled = true
         
     }
     
@@ -251,9 +283,9 @@ class TodayController: UIViewController, CLLocationManagerDelegate, UICollection
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let curCell = collectionView.dequeueReusableCell(withReuseIdentifier: "CardView", for: indexPath) as! CardView
-//        if indexPath.section%2 == 1 {
-//            curCell.mainView.backgroundColor = .green
-//        }
+        //        if indexPath.section%2 == 1 {
+        //            curCell.mainView.backgroundColor = .green
+        //        }
         if indexPath.row%2 == 1 {
             curCell.mainView.backgroundColor = .green
         }
