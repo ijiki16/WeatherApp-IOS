@@ -58,6 +58,31 @@
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="neF-8R-f7a">
                                         <rect key="frame" x="0.0" y="287" width="388" height="287"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="VxF-yT-3qu">
+                                                <rect key="frame" x="0.0" y="50" width="388" height="187"/>
+                                                <subviews>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yrh-Z2-cAa" customClass="cardRowView" customModule="FinalProject" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="0.0" width="388" height="47"/>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eyS-Jn-zpt" customClass="cardRowView" customModule="FinalProject" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="47" width="388" height="46.5"/>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lqD-Yk-eWL" customClass="cardRowView" customModule="FinalProject" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="93.5" width="388" height="47"/>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MCs-YC-151" customClass="cardRowView" customModule="FinalProject" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="140.5" width="388" height="46.5"/>
+                                                    </view>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="VxF-yT-3qu" secondAttribute="trailing" id="FhI-Z1-7gL"/>
+                                            <constraint firstItem="VxF-yT-3qu" firstAttribute="leading" secondItem="neF-8R-f7a" secondAttribute="leading" id="H85-Qy-qdB"/>
+                                            <constraint firstItem="VxF-yT-3qu" firstAttribute="top" secondItem="neF-8R-f7a" secondAttribute="top" constant="50" id="JCz-VY-V1F"/>
+                                            <constraint firstAttribute="bottom" secondItem="VxF-yT-3qu" secondAttribute="bottom" constant="50" id="as0-ec-MHQ"/>
+                                        </constraints>
                                     </view>
                                 </subviews>
                             </stackView>
@@ -101,6 +126,8 @@
             <size key="customSize" width="388" height="574"/>
             <connections>
                 <outlet property="childView" destination="zOB-pQ-Pr6" id="yN9-Xu-8xw"/>
+                <outlet property="cloudiness" destination="yrh-Z2-cAa" id="phZ-nQ-9XW"/>
+                <outlet property="humidity" destination="eyS-Jn-zpt" id="VXI-s3-pIP"/>
                 <outlet property="icon" destination="in1-RM-N0b" id="8Io-gb-GrM"/>
                 <outlet property="line1" destination="WCc-fx-DBA" id="pzX-On-BAr"/>
                 <outlet property="line2" destination="Wzj-C4-gue" id="bpJ-lb-qif"/>
@@ -108,6 +135,8 @@
                 <outlet property="place" destination="PgX-cI-lC0" id="mCr-fM-Fgt"/>
                 <outlet property="stackView" destination="Xpk-6D-aRJ" id="mhU-SV-fhA"/>
                 <outlet property="wether" destination="XXJ-of-Rwo" id="cge-bt-THy"/>
+                <outlet property="windDirection" destination="MCs-YC-151" id="uQx-eV-DpA"/>
+                <outlet property="windSpeed" destination="lqD-Yk-eWL" id="YjK-e9-Fq2"/>
             </connections>
             <point key="canvasLocation" x="-710.14492753623199" y="134.59821428571428"/>
         </collectionViewCell>

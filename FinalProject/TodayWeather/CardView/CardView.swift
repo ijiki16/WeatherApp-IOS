@@ -18,7 +18,11 @@ class CardView: UICollectionViewCell {
     @IBOutlet weak var icon: UIImageView!
     @IBOutlet weak var place: UILabel!
     @IBOutlet weak var wether: UILabel!
-    
+    // second view
+    @IBOutlet weak var cloudiness: cardRowView!
+    @IBOutlet weak var humidity: cardRowView!
+    @IBOutlet weak var windSpeed: cardRowView!
+    @IBOutlet weak var windDirection: cardRowView!
     
     private let gradientLayer: CAGradientLayer = {
         let layer = CAGradientLayer()

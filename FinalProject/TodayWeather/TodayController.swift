@@ -182,9 +182,9 @@ class TodayController: UIViewController, CLLocationManagerDelegate, UICollection
                         temp: String(round(apiData.main.temp - 273.15)) + "˚C",
                         weather: apiData.weather[0].description,
                         icon: apiData.weather[0].icon,
-                        cloudiness: String(round(apiData.clouds.all)) + " %", //"75%",
-                        humidity: String(round(apiData.main.humidity)) + " mm", //"93 mm",
-                        windSpeed: String(round(apiData.wind.speed)) + " km/h", //"1.03 km/h",
+                        cloudiness: String(Int(round(apiData.clouds.all))) + "%", //"75%",
+                        humidity: String(Int(round(apiData.main.humidity))) + " mm", //"93 mm",
+                        windSpeed: String(apiData.wind.speed) + " km/h", //"1.03 km/h",
                         windDirection: Direction(apiData.wind.deg).description, //"W"
                         curLocation: true
                     )
@@ -225,9 +225,9 @@ class TodayController: UIViewController, CLLocationManagerDelegate, UICollection
                         temp: String(round(apiData.main.temp - 273.15)) + "˚C",
                         weather: apiData.weather[0].description,
                         icon: apiData.weather[0].icon,
-                        cloudiness: String(round(apiData.clouds.all)) + " %", //"75%",
-                        humidity: String(round(apiData.main.humidity)) + " mm", //"93 mm",
-                        windSpeed: String(round(apiData.wind.speed)) + " km/h", //"1.03 km/h",
+                        cloudiness: String(Int(round(apiData.clouds.all))) + "%", //"75%",
+                        humidity: String(Int(round(apiData.main.humidity))) + " mm", //"93 mm",
+                        windSpeed: String(apiData.wind.speed) + " km/h", //"1.03 km/h",
                         windDirection: Direction(apiData.wind.deg).description, //"W"
                         curLocation: isCurLoc
                     )
@@ -267,6 +267,22 @@ class TodayController: UIViewController, CLLocationManagerDelegate, UICollection
         curCell.place.text = curDt.cityName + " , " + namePlace
         // weather
         curCell.wether.text = curDt.temp + " | " + curDt.weather
+        //
+        curCell.cloudiness.dataType.text = "Cloudiness"
+        curCell.cloudiness.dataValue.text = curDt.cloudiness
+        curCell.cloudiness.icon.image = UIImage(named: "raining")
+        //
+        curCell.humidity.dataType.text = "Humidity"
+        curCell.humidity.dataValue.text = curDt.humidity
+        curCell.humidity.icon.image = UIImage(named: "drop")
+        //
+        curCell.windSpeed.dataType.text = "Wind Speed"
+        curCell.windSpeed.dataValue.text = curDt.windSpeed
+        curCell.windSpeed.icon.image = UIImage(named: "wind")
+        //
+        curCell.windDirection.dataType.text = "Wind Direction"
+        curCell.windDirection.dataValue.text = curDt.windDirection
+        curCell.windDirection.icon.image = UIImage(named: "compass")
         //        if indexPath.section%2 == 1 {
         //            curCell.mainView.backgroundColor = .green
         //        }
