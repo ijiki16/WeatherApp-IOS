@@ -48,6 +48,7 @@ class TodayController: UIViewController, CLLocationManagerDelegate, UICollection
         getLocationPermison()
         setupLoader()
         setupCollectionView()
+        setupButton()
         loadStart()
         getDataFromAPI2(city: "Kutaisi", isCurLoc: false)
         getDataFromAPI2(city: "Tbilisi", isCurLoc: false)
@@ -62,6 +63,7 @@ class TodayController: UIViewController, CLLocationManagerDelegate, UICollection
         
         //layout.sectio
         layout.itemSize = CGSize(width: collectionView.bounds.width * 0.7, height: collectionView.bounds.height * 0.6)
+//        layout.minimumLineSpacing = 10
         collectionView.collectionViewLayout = layout
     }
     
@@ -92,7 +94,11 @@ class TodayController: UIViewController, CLLocationManagerDelegate, UICollection
         collectionView  =  UICollectionView(frame: view.frame, collectionViewLayout: layout)
         view.addSubview(collectionView)
         layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: collectionView.bounds.width * 0.7, height: collectionView.bounds.height * 0.6)
+//        layout.itemSize = CGSize(width: collectionView.bounds.width * 0.7, height: collectionView.bounds.height * 0.6)
+//        layout.minimumLineSpacing = collectionView.bounds.width * 0.3
+//        layout.sectionInset = UIEdgeInsets(top: 0, left: collectionView.bounds.width * 0.15, bottom: 0, right: collectionView.bounds.width * 0.15)
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.showsVerticalScrollIndicator = false
         collectionView.collectionViewLayout = layout
         collectionView.backgroundColor = .clear
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -103,6 +109,7 @@ class TodayController: UIViewController, CLLocationManagerDelegate, UICollection
         collectionView.bottomAnchor.constraint(equalTo:view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         //
         collectionView.isPagingEnabled = true
+        collectionView.isScrollEnabled = true
         collectionView.register( UINib(nibName: "CardView", bundle: nil), forCellWithReuseIdentifier: "CardView")
         //t
         collectionView.delegate = self
@@ -110,6 +117,34 @@ class TodayController: UIViewController, CLLocationManagerDelegate, UICollection
         
         //        collectionView.isScrollEnabled = true
         
+    }
+    
+    func setupButton(){
+        let button = UIButton() ;
+//        let systemImage = UIImage(systemName: "trash") ;
+//        button.setImage(systemImage, for: .normal)
+        // frame: CGRect(x: 100, y: 100, width: 100, height: 50)
+//        let button = UIButton(frame: CGRect(x: 100, y: 100, width: 100, height: 50))
+//        let button = UIButton(type: UIButtonTypeDetailDisclosure)
+//        button.frame = CGRect(x: 100, y: 100, width: 100, height: 50)
+        button.backgroundColor = .green
+//        button.setTitle("Test Button", for: .normal)
+//        button.imageView?.image = UIImage(named: "drop")
+        button.setImage(UIImage(systemName: "plus"), for: .normal)
+//        button.image
+        button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+//        button.
+        self.view.addSubview(button)
+        
+        button.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 40).isActive = true
+//        button.bottomAnchor.constraint(equalTo: self.safe)
+        button.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        button.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        button.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+    }
+    
+    @objc func buttonAction(sender: UIButton!) {
+      print("Button tapped")
     }
     
     func setupLoader() {
@@ -145,7 +180,7 @@ class TodayController: UIViewController, CLLocationManagerDelegate, UICollection
     @objc func refersh() {
         print("refresh Today")
         //        todayData.removeAll()
-        //        loadStart()
+        loadStart()
         getDataFromAPI1()
     }
     
