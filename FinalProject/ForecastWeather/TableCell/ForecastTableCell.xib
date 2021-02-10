@@ -18,11 +18,11 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="20˚C" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gz1-6o-Dg1">
-                        <rect key="frame" x="240" y="10" width="50" height="50"/>
+                        <rect key="frame" x="220" y="0.0" width="70" height="70"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="gz1-6o-Dg1" secondAttribute="height" multiplier="1:1" id="OQ1-Ev-xun"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="22"/>
                         <color key="textColor" name="AccentColor"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -44,7 +44,7 @@
                     </imageView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="gz1-6o-Dg1" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="1FV-qH-QHs"/>
+                    <constraint firstItem="gz1-6o-Dg1" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="1FV-qH-QHs"/>
                     <constraint firstAttribute="trailing" secondItem="gz1-6o-Dg1" secondAttribute="trailing" constant="30" id="8pb-7z-4Pv"/>
                     <constraint firstItem="rrh-BG-2TC" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="75" id="PKF-QP-ly1"/>
                     <constraint firstAttribute="bottom" secondItem="rrh-BG-2TC" secondAttribute="bottom" constant="11" id="fTx-fY-c4q"/>

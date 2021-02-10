@@ -8,6 +8,7 @@
 import UIKit
 import CoreLocation
 import NVActivityIndicatorView
+import SDWebImage
 //import CollectionViewPagingLayout
 import UPCarouselFlowLayout
 
@@ -21,8 +22,8 @@ class TodayController: UIViewController, CLLocationManagerDelegate, UICollection
     private var collectionView :  UICollectionView!
     private var loader = NVActivityIndicatorView(frame: .zero, type: .lineSpinFadeLoader, color:UIColor(named: "AccentColor") ?? .yellow, padding: 0)
     private let layout = UPCarouselFlowLayout()
-//    private let layout = CollectionViewPagingLayout()
-//    private let layout = UICollectionViewLayout()
+    //    private let layout = CollectionViewPagingLayout()
+    //    private let layout = UICollectionViewLayout()
     // coordinates
     private var latitude = "0"
     private var longitude = "0"
@@ -48,9 +49,9 @@ class TodayController: UIViewController, CLLocationManagerDelegate, UICollection
         setupLoader()
         setupCollectionView()
         loadStart()
-//        getDataFromAPI2(city: "Kutaisi", isCurLoc: false)
-//        getDataFromAPI2(city: "Tbilisi", isCurLoc: false)
-//        getDataFromAPI2(city: "Batumi", isCurLoc: false)
+        getDataFromAPI2(city: "Kutaisi", isCurLoc: false)
+        getDataFromAPI2(city: "Tbilisi", isCurLoc: false)
+        getDataFromAPI2(city: "Batumi", isCurLoc: false)
         
     }
     
@@ -58,7 +59,7 @@ class TodayController: UIViewController, CLLocationManagerDelegate, UICollection
         super.viewDidLayoutSubviews()
         gradientLayer.frame = view.bounds
         collectionView.frame = self.view.frame
-
+        
         //layout.sectio
         layout.itemSize = CGSize(width: collectionView.bounds.width * 0.7, height: collectionView.bounds.height * 0.6)
         collectionView.collectionViewLayout = layout
@@ -86,12 +87,9 @@ class TodayController: UIViewController, CLLocationManagerDelegate, UICollection
     
     func setupCollectionView() {
         
-        
         // layout
         //let layout = CollectionViewPagingLayout()
-
-        //layout.sectio
-        collectionView  =  UICollectionView(frame: view.bounds, collectionViewLayout: layout)
+        collectionView  =  UICollectionView(frame: view.frame, collectionViewLayout: layout)
         view.addSubview(collectionView)
         layout.scrollDirection = .horizontal
         layout.itemSize = CGSize(width: collectionView.bounds.width * 0.7, height: collectionView.bounds.height * 0.6)
@@ -104,14 +102,13 @@ class TodayController: UIViewController, CLLocationManagerDelegate, UICollection
         collectionView.trailingAnchor.constraint(equalTo:view.safeAreaLayoutGuide.trailingAnchor).isActive = true
         collectionView.bottomAnchor.constraint(equalTo:view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         //
-        
+        collectionView.isPagingEnabled = true
         collectionView.register( UINib(nibName: "CardView", bundle: nil), forCellWithReuseIdentifier: "CardView")
-        //        collectionView.isPagingEnabled = true // enabling paging effect
+        //t
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.isPagingEnabled = true
-//        collectionView.
-//        collectionView.isScrollEnabled = true
+        
+        //        collectionView.isScrollEnabled = true
         
     }
     
@@ -184,6 +181,7 @@ class TodayController: UIViewController, CLLocationManagerDelegate, UICollection
                         countryName: apiData.sys.country,
                         temp: String(round(apiData.main.temp - 273.15)) + "˚C",
                         weather: apiData.weather[0].description,
+                        icon: apiData.weather[0].icon,
                         cloudiness: String(round(apiData.clouds.all)) + " %", //"75%",
                         humidity: String(round(apiData.main.humidity)) + " mm", //"93 mm",
                         windSpeed: String(round(apiData.wind.speed)) + " km/h", //"1.03 km/h",
@@ -191,10 +189,11 @@ class TodayController: UIViewController, CLLocationManagerDelegate, UICollection
                         curLocation: true
                     )
                 )
+                
                 print(self.todayData)
                 print("--------------------")
                 DispatchQueue.main.async {
-                    //                    self.tableView.reloadData()
+                    self.collectionView.reloadData()
                 }
                 self.loadEnd()
             case .failure(let error):
@@ -225,6 +224,7 @@ class TodayController: UIViewController, CLLocationManagerDelegate, UICollection
                         countryName: apiData.sys.country,
                         temp: String(round(apiData.main.temp - 273.15)) + "˚C",
                         weather: apiData.weather[0].description,
+                        icon: apiData.weather[0].icon,
                         cloudiness: String(round(apiData.clouds.all)) + " %", //"75%",
                         humidity: String(round(apiData.main.humidity)) + " mm", //"93 mm",
                         windSpeed: String(round(apiData.wind.speed)) + " km/h", //"1.03 km/h",
@@ -233,6 +233,9 @@ class TodayController: UIViewController, CLLocationManagerDelegate, UICollection
                     )
                 )
                 
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                }
                 print(self.todayData)
                 print("--------------------")
             case .failure(let error):
@@ -246,17 +249,30 @@ class TodayController: UIViewController, CLLocationManagerDelegate, UICollection
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 6
+        return self.todayData.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
         let curCell = collectionView.dequeueReusableCell(withReuseIdentifier: "CardView", for: indexPath) as! CardView
-//        if indexPath.section%2 == 1 {
-//            curCell.mainView.backgroundColor = .green
-//        }
-//        if indexPath.row%2 == 1 {
-//            curCell.mainView.backgroundColor = .green
-//        }
+//        print(indexPath.row)
+        
+        let curDt = todayData[indexPath.row]
+        // icon
+        let urlString = "https://openweathermap.org/img/wn/"+curDt.icon+"@2x.png"
+        curCell.icon.sd_setImage(with: URL(string: urlString), completed: nil)
+        // place
+        let current = Locale(identifier: "en_US")
+        let namePlace = current.localizedString(forRegionCode:  curDt.countryName) ??  curDt.countryName
+        curCell.place.text = curDt.cityName + " , " + namePlace
+        // weather
+        curCell.wether.text = curDt.temp + " | " + curDt.weather
+        //        if indexPath.section%2 == 1 {
+        //            curCell.mainView.backgroundColor = .green
+        //        }
+        //        if indexPath.row%2 == 1 {
+        //            curCell.mainView.backgroundColor = .green
+        //        }
         
         return curCell
     }

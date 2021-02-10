@@ -3,6 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -20,16 +21,56 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zOB-pQ-Pr6">
                         <rect key="frame" x="0.0" y="0.0" width="388" height="574"/>
                         <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="Xpk-6D-aRJ">
+                                <rect key="frame" x="0.0" y="0.0" width="388" height="574"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="149-3k-PQA">
+                                        <rect key="frame" x="0.0" y="0.0" width="388" height="287"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sun" translatesAutoresizingMaskIntoConstraints="NO" id="in1-RM-N0b">
+                                                <rect key="frame" x="119" y="0.0" width="150" height="150"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="150" id="KWa-L1-kp9"/>
+                                                    <constraint firstAttribute="width" secondItem="in1-RM-N0b" secondAttribute="height" multiplier="1:1" id="knf-u7-X2I"/>
+                                                </constraints>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tbilisi, Georgia" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PgX-cI-lC0">
+                                                <rect key="frame" x="127.5" y="136" width="133" height="24"/>
+                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-2˚C | Misty" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XXJ-of-Rwo">
+                                                <rect key="frame" x="128.5" y="180" width="131" height="30"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                                <color key="textColor" name="accent"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="PgX-cI-lC0" firstAttribute="bottom" secondItem="in1-RM-N0b" secondAttribute="bottom" constant="10" id="5xM-i2-xHu"/>
+                                            <constraint firstItem="PgX-cI-lC0" firstAttribute="centerX" secondItem="149-3k-PQA" secondAttribute="centerX" id="D32-2z-QeI"/>
+                                            <constraint firstItem="XXJ-of-Rwo" firstAttribute="centerX" secondItem="149-3k-PQA" secondAttribute="centerX" id="Wqe-Ep-DTZ"/>
+                                            <constraint firstItem="XXJ-of-Rwo" firstAttribute="bottom" secondItem="PgX-cI-lC0" secondAttribute="bottom" constant="50" id="d5h-24-1PF"/>
+                                            <constraint firstItem="in1-RM-N0b" firstAttribute="top" secondItem="149-3k-PQA" secondAttribute="top" id="hw6-fx-kYD"/>
+                                            <constraint firstItem="in1-RM-N0b" firstAttribute="centerX" secondItem="149-3k-PQA" secondAttribute="centerX" id="ozr-WT-X5Z"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="neF-8R-f7a">
+                                        <rect key="frame" x="0.0" y="287" width="388" height="287"/>
+                                    </view>
+                                </subviews>
+                            </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WCc-fx-DBA">
                                 <rect key="frame" x="74" y="286.5" width="240" height="1"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="3pM-BI-L7o"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wzj-C4-gue">
                                 <rect key="frame" x="193.5" y="115" width="1" height="344"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="1" id="dcj-eG-1Iw"/>
                                 </constraints>
@@ -37,11 +78,15 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="Xpk-6D-aRJ" firstAttribute="leading" secondItem="zOB-pQ-Pr6" secondAttribute="leading" id="D0v-XA-Zli"/>
                             <constraint firstItem="Wzj-C4-gue" firstAttribute="centerY" secondItem="zOB-pQ-Pr6" secondAttribute="centerY" id="Dz4-wL-1qg"/>
                             <constraint firstItem="WCc-fx-DBA" firstAttribute="width" secondItem="zOB-pQ-Pr6" secondAttribute="width" multiplier="0.618557" id="Fpf-LR-eer"/>
+                            <constraint firstItem="Xpk-6D-aRJ" firstAttribute="top" secondItem="zOB-pQ-Pr6" secondAttribute="top" id="JyU-CE-gwh"/>
                             <constraint firstItem="WCc-fx-DBA" firstAttribute="centerY" secondItem="zOB-pQ-Pr6" secondAttribute="centerY" id="anE-m3-jNG"/>
+                            <constraint firstAttribute="trailing" secondItem="Xpk-6D-aRJ" secondAttribute="trailing" id="jTO-jm-46q"/>
                             <constraint firstItem="Wzj-C4-gue" firstAttribute="height" secondItem="zOB-pQ-Pr6" secondAttribute="height" multiplier="0.6" id="jli-h1-UCT"/>
                             <constraint firstItem="Wzj-C4-gue" firstAttribute="centerX" secondItem="zOB-pQ-Pr6" secondAttribute="centerX" id="olz-ic-4PP"/>
+                            <constraint firstAttribute="bottom" secondItem="Xpk-6D-aRJ" secondAttribute="bottom" id="qPu-ee-sIQ"/>
                             <constraint firstItem="WCc-fx-DBA" firstAttribute="centerX" secondItem="zOB-pQ-Pr6" secondAttribute="centerX" id="tD2-dW-nkA"/>
                         </constraints>
                     </view>
@@ -56,14 +101,22 @@
             <size key="customSize" width="388" height="574"/>
             <connections>
                 <outlet property="childView" destination="zOB-pQ-Pr6" id="yN9-Xu-8xw"/>
+                <outlet property="icon" destination="in1-RM-N0b" id="8Io-gb-GrM"/>
                 <outlet property="line1" destination="WCc-fx-DBA" id="pzX-On-BAr"/>
                 <outlet property="line2" destination="Wzj-C4-gue" id="bpJ-lb-qif"/>
                 <outlet property="mainView" destination="01q-CP-6cM" id="Pd3-EW-nmT"/>
+                <outlet property="place" destination="PgX-cI-lC0" id="mCr-fM-Fgt"/>
+                <outlet property="stackView" destination="Xpk-6D-aRJ" id="mhU-SV-fhA"/>
+                <outlet property="wether" destination="XXJ-of-Rwo" id="cge-bt-THy"/>
             </connections>
-            <point key="canvasLocation" x="-710" y="135"/>
+            <point key="canvasLocation" x="-710.14492753623199" y="134.59821428571428"/>
         </collectionViewCell>
     </objects>
     <resources>
+        <image name="sun" width="227" height="227"/>
+        <namedColor name="accent">
+            <color red="0.9882352941176471" green="0.91764705882352937" blue="0.16078431372549021" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

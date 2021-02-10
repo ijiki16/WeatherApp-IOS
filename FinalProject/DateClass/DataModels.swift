@@ -110,6 +110,7 @@ struct dayData {
     var countryName: String
     var temp: String
     var weather: String
+    var icon :  String
     var cloudiness: String
     var humidity: String
     var windSpeed: String

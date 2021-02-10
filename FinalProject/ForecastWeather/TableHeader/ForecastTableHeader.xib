@@ -20,7 +20,7 @@
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FRIDAY" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2BR-Sg-5oc">
                             <rect key="frame" x="13" y="0.0" width="401" height="70"/>
                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                            <color key="textColor" name="AccentColor"/>
+                            <color key="textColor" name="accent"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
@@ -48,7 +48,7 @@
         </view>
     </objects>
     <resources>
-        <namedColor name="AccentColor">
+        <namedColor name="accent">
             <color red="0.9882352941176471" green="0.91764705882352937" blue="0.16078431372549021" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
