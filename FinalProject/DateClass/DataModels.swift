@@ -117,6 +117,7 @@ struct dayData {
     var windDirection: String
     // isCurrentLocationData
     var curLocation: Bool
+    var isMainData: Bool
 }
 
 

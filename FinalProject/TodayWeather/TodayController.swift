@@ -21,18 +21,49 @@ class TodayController: UIViewController, CLLocationManagerDelegate, UICollection
     private var todayData: [dayData] = []
     private var collectionView :  UICollectionView!
     private var loader = NVActivityIndicatorView(frame: .zero, type: .lineSpinFadeLoader, color:UIColor(named: "AccentColor") ?? .yellow, padding: 0)
+    private var addButton = UIButton(frame: .zero)
+    private var addCard = addCityCardView()
+    private var blur = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
     private let layout = UPCarouselFlowLayout()
+    
     //    private let layout = CollectionViewPagingLayout()
     //    private let layout = UICollectionViewLayout()
     // coordinates
     private var latitude = "0"
     private var longitude = "0"
     
-    private let gradientLayer: CAGradientLayer = {
+    private let gradientLayerBG: CAGradientLayer = {
         let layer = CAGradientLayer()
         layer.colors = [
             UIColor(named: "bg-gradient-start")?.cgColor ?? UIColor.blue.cgColor ,
             UIColor(named: "bg-gradient-end")?.cgColor ?? UIColor.red.cgColor
+        ]
+        return layer
+    }()
+    
+    private let gradientLayerBlue: CAGradientLayer = {
+        let layer = CAGradientLayer()
+        layer.colors = [
+            UIColor(named: "blue-gradient-start")?.cgColor ?? UIColor.blue.cgColor ,
+            UIColor(named: "blue-gradient-end")?.cgColor ?? UIColor.red.cgColor
+        ]
+        return layer
+    }()
+    
+    private let gradientLayerGreen: CAGradientLayer = {
+        let layer = CAGradientLayer()
+        layer.colors = [
+            UIColor(named: "green-gradient-start")?.cgColor ?? UIColor.blue.cgColor ,
+            UIColor(named: "green-gradient-end")?.cgColor ?? UIColor.red.cgColor
+        ]
+        return layer
+    }()
+    
+    private let gradientLayerOchre: CAGradientLayer = {
+        let layer = CAGradientLayer()
+        layer.colors = [
+            UIColor(named: "ochre-gradient-start")?.cgColor ?? UIColor.blue.cgColor ,
+            UIColor(named: "ochre-gradient-end")?.cgColor ?? UIColor.red.cgColor
         ]
         return layer
     }()
@@ -42,29 +73,41 @@ class TodayController: UIViewController, CLLocationManagerDelegate, UICollection
         // Do any additional setup after loading the view.
         setupNavBar()
         // gradient
-        gradientLayer.frame = self.view.bounds
-        self.view.layer.addSublayer(gradientLayer)
+        gradientLayerBG.frame = self.view.bounds
+        self.view.layer.addSublayer(gradientLayerBG)
         //
         getLocationPermison()
         setupLoader()
         setupCollectionView()
         setupButton()
+        setupAddCard()
         loadStart()
-        getDataFromAPI2(city: "Kutaisi", isCurLoc: false)
-        getDataFromAPI2(city: "Tbilisi", isCurLoc: false)
-        getDataFromAPI2(city: "Batumi", isCurLoc: false)
+        let gesture = UITapGestureRecognizer(target: self, action:  #selector(self.removeAddCityCard))
+        self.blur.addGestureRecognizer(gesture)
+        //        getDataFromAPI2(city: "Kutaisi", isCurLoc: false)
+        //        getDataFromAPI2(city: "Tbilisi", isCurLoc: false)
+        //        getDataFromAPI2(city: "Batumi", isCurLoc: false)
         
+    }
+    
+    @objc func removeAddCityCard(sender : UITapGestureRecognizer) {
+        // Do what you want
+        addCard.isHidden = true
+        self.addCard.button.setImage(UIImage(systemName: "plus"), for: .normal)
+        self.addCard.textInput.text = ""
+        blurEnd()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        gradientLayer.frame = view.bounds
+        gradientLayerBG.frame = view.bounds
         collectionView.frame = self.view.frame
         
         //layout.sectio
         layout.itemSize = CGSize(width: collectionView.bounds.width * 0.7, height: collectionView.bounds.height * 0.6)
-//        layout.minimumLineSpacing = 10
+        //        layout.minimumLineSpacing = 10
         collectionView.collectionViewLayout = layout
+        self.blur.frame = self.view.bounds
     }
     
     func setupNavBar(){
@@ -94,19 +137,14 @@ class TodayController: UIViewController, CLLocationManagerDelegate, UICollection
         collectionView  =  UICollectionView(frame: view.frame, collectionViewLayout: layout)
         view.addSubview(collectionView)
         layout.scrollDirection = .horizontal
-//        layout.itemSize = CGSize(width: collectionView.bounds.width * 0.7, height: collectionView.bounds.height * 0.6)
-//        layout.minimumLineSpacing = collectionView.bounds.width * 0.3
-//        layout.sectionInset = UIEdgeInsets(top: 0, left: collectionView.bounds.width * 0.15, bottom: 0, right: collectionView.bounds.width * 0.15)
+        //        layout.itemSize = CGSize(width: collectionView.bounds.width * 0.7, height: collectionView.bounds.height * 0.6)
+        //        layout.minimumLineSpacing = collectionView.bounds.width * 0.3
+        //        layout.sectionInset = UIEdgeInsets(top: 0, left: collectionView.bounds.width * 0.15, bottom: 0, right: collectionView.bounds.width * 0.15)
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.showsVerticalScrollIndicator = false
         collectionView.collectionViewLayout = layout
         collectionView.backgroundColor = .clear
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        //
-        collectionView.topAnchor.constraint(equalTo:view.safeAreaLayoutGuide.topAnchor).isActive = true
-        collectionView.leadingAnchor.constraint(equalTo:view.safeAreaLayoutGuide.leadingAnchor).isActive = true
-        collectionView.trailingAnchor.constraint(equalTo:view.safeAreaLayoutGuide.trailingAnchor).isActive = true
-        collectionView.bottomAnchor.constraint(equalTo:view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         //
         collectionView.isPagingEnabled = true
         collectionView.isScrollEnabled = true
@@ -115,38 +153,99 @@ class TodayController: UIViewController, CLLocationManagerDelegate, UICollection
         collectionView.delegate = self
         collectionView.dataSource = self
         
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(longPressed))
+        collectionView.addGestureRecognizer(longPress)
         //        collectionView.isScrollEnabled = true
+    }
+    
+    @objc func longPressed(sender: UILongPressGestureRecognizer) {
+        
+        let alertActionCell = UIAlertController(title: "Delete this city?", message: "Choose an action", preferredStyle: .alert)
+        
+        
+        let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: { action in
+            for (index, data) in self.todayData.enumerated() {
+
+                if (data.isMainData) {
+                    self.todayData.remove(at: index)
+                }
+            }
+            self.collectionView.reloadData()
+        })
+        
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
+        })
+        
+        alertActionCell.addAction(deleteAction)
+        alertActionCell.addAction(cancelAction)
+        
+        
+        self.present(alertActionCell, animated: true, completion: nil)
+        
         
     }
     
+    
     func setupButton(){
-        let button = UIButton() ;
-//        let systemImage = UIImage(systemName: "trash") ;
-//        button.setImage(systemImage, for: .normal)
-        // frame: CGRect(x: 100, y: 100, width: 100, height: 50)
-//        let button = UIButton(frame: CGRect(x: 100, y: 100, width: 100, height: 50))
-//        let button = UIButton(type: UIButtonTypeDetailDisclosure)
-//        button.frame = CGRect(x: 100, y: 100, width: 100, height: 50)
-        button.backgroundColor = .green
-//        button.setTitle("Test Button", for: .normal)
-//        button.imageView?.image = UIImage(named: "drop")
-        button.setImage(UIImage(systemName: "plus"), for: .normal)
-//        button.image
-        button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
-//        button.
-        self.view.addSubview(button)
         
-        button.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 40).isActive = true
-//        button.bottomAnchor.constraint(equalTo: self.safe)
-        button.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        button.widthAnchor.constraint(equalToConstant: 50).isActive = true
-        button.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        addButton.backgroundColor = .white
+        addButton.layer.cornerRadius = 25
+        addButton.setImage(UIImage(systemName: "plus"), for: .normal)
+        addButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+        
+        self.addButton.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(addButton)
+        
+        NSLayoutConstraint.activate([
+            addButton.widthAnchor.constraint(equalToConstant: 50),
+            addButton.heightAnchor.constraint(equalToConstant: 50),
+            addButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -80),
+            addButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            
+        ])
+        addButton.isHidden = true
     }
     
     @objc func buttonAction(sender: UIButton!) {
-      print("Button tapped")
+        //        print("Button tapped")
+        self.addCard.button.setImage(UIImage(systemName: "plus"), for: .normal)
+        self.addCard.textInput.text = ""
+        addCard.isHidden = !addCard.isHidden
+        blurStart()
     }
     
+    
+    func setupAddCard(){
+        
+        self.addCard.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(addCard)
+        
+        NSLayoutConstraint.activate([
+            addCard.widthAnchor.constraint(equalToConstant: 320),
+            addCard.heightAnchor.constraint(equalToConstant: 220),
+            addCard.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            addCard.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            
+        ])
+        //        addCard.mainView.backgroundColor = .clear
+        gradientLayerGreen.frame = addCard.mainView.bounds
+        gradientLayerGreen.cornerRadius = 30
+        addCard.mainView.layer.insertSublayer(gradientLayerGreen, at: 0)
+        addCard.mainView.backgroundColor = UIColor(named: "green-gradient-start")
+        
+        addCard.button.addTarget(self, action: #selector(addCity), for: .touchUpInside)
+        addCard.isHidden = true
+    }
+    
+    @objc func addCity(sender: UIButton!) {
+        //        print("Button add City")
+        self.addCard.button.setImage(UIImage(systemName: "globe"), for: .normal)
+        let text = self.addCard.textInput.text
+        //        print(text)
+        getDataFromAPI2(city: text ?? "", isCurLoc: false)
+        
+    }
     func setupLoader() {
         self.loader.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(loader)
@@ -164,7 +263,9 @@ class TodayController: UIViewController, CLLocationManagerDelegate, UICollection
     func loadStart(){
         DispatchQueue.main.async {
             self.collectionView.isHidden = true
+            self.addButton.isHidden = true
             self.loader.isHidden = false
+            self.addCard.isHidden = true
         }
         
     }
@@ -174,6 +275,21 @@ class TodayController: UIViewController, CLLocationManagerDelegate, UICollection
             self.dismiss(animated: true, completion: nil)
             self.loader.isHidden = true
             self.collectionView.isHidden = false
+            self.addButton.isHidden = false
+        }
+    }
+    
+    func blurStart() {
+        DispatchQueue.main.async {
+            self.blur.frame = self.view.bounds
+            self.view.addSubview(self.blur)
+            self.view.bringSubviewToFront(self.addCard)
+        }
+    }
+    
+    func blurEnd(){
+        DispatchQueue.main.async {
+            self.blur.removeFromSuperview()
         }
     }
     
@@ -204,9 +320,14 @@ class TodayController: UIViewController, CLLocationManagerDelegate, UICollection
                 let cityID = apiData.id
                 
                 for (index, data) in self.todayData.enumerated() {
-                    if (String(cityID) == data.id) {
-                        self.todayData.remove(at: index)
+                    
+                    var curDt = data
+                    curDt.isMainData = false
+                    self.todayData.remove(at: index)
+                    if (String(cityID) != data.id || !data.curLocation) {
+                        self.todayData.append(curDt)
                     }
+                    
                 }
                 
                 self.todayData.append(
@@ -221,18 +342,23 @@ class TodayController: UIViewController, CLLocationManagerDelegate, UICollection
                         humidity: String(Int(round(apiData.main.humidity))) + " mm", //"93 mm",
                         windSpeed: String(apiData.wind.speed) + " km/h", //"1.03 km/h",
                         windDirection: Direction(apiData.wind.deg).description, //"W"
-                        curLocation: true
+                        curLocation: true,
+                        isMainData: true
                     )
                 )
                 
-                print(self.todayData)
-                print("--------------------")
+                //                print(self.todayData)
+                //                print("--------------------")
                 DispatchQueue.main.async {
                     self.collectionView.reloadData()
                 }
+                
+                
                 self.loadEnd()
+                
             case .failure(let error):
                 print(error)
+                
             }
         }
     }
@@ -247,8 +373,11 @@ class TodayController: UIViewController, CLLocationManagerDelegate, UICollection
                 let cityID = apiData.id
                 
                 for (index, data) in self.todayData.enumerated() {
-                    if (String(cityID) == data.id) {
-                        self.todayData.remove(at: index)
+                    var curDt = data
+                    curDt.isMainData = false
+                    self.todayData.remove(at: index)
+                    if (String(cityID) != data.id) {
+                        self.todayData.append(curDt)
                     }
                 }
                 
@@ -264,16 +393,26 @@ class TodayController: UIViewController, CLLocationManagerDelegate, UICollection
                         humidity: String(Int(round(apiData.main.humidity))) + " mm", //"93 mm",
                         windSpeed: String(apiData.wind.speed) + " km/h", //"1.03 km/h",
                         windDirection: Direction(apiData.wind.deg).description, //"W"
-                        curLocation: isCurLoc
+                        curLocation: isCurLoc,
+                        isMainData: true
                     )
                 )
                 
                 DispatchQueue.main.async {
                     self.collectionView.reloadData()
+                    self.blurEnd()
+                    self.addCard.isHidden = true
                 }
-                print(self.todayData)
-                print("--------------------")
+                
+                
+                //                print(self.todayData)
+                //                print("--------------------")
+                self.loadEnd()
             case .failure(let error):
+                DispatchQueue.main.async {
+                    self.addCard.button.setImage(UIImage(systemName: "plus"), for: .normal)
+                    self.addCard.shake()
+                }
                 print(error)
             }
         }
@@ -290,7 +429,7 @@ class TodayController: UIViewController, CLLocationManagerDelegate, UICollection
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let curCell = collectionView.dequeueReusableCell(withReuseIdentifier: "CardView", for: indexPath) as! CardView
-//        print(indexPath.row)
+        //        print(indexPath.row)
         
         let curDt = todayData[indexPath.row]
         // icon
