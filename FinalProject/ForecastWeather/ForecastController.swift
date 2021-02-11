@@ -34,6 +34,22 @@ class ForecastController: UIViewController, CLLocationManagerDelegate, UITableVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if let viewControllers = tabBarController?.viewControllers {
+            for viewController in viewControllers {
+                // some process
+                if let ctrl = viewController as? TodayController{
+                    for data in ctrl.todayData{
+                        if( data.isMainData){
+                            self.longitude = data.longitude
+                            self.latitude = data.latitude
+//                            getDataFromAPI()
+                        }
+                    }
+                }
+            }
+        }
+        
         // Do any additional setup after loading the view.
         setupNavBar()
         // gradient
@@ -141,16 +157,16 @@ class ForecastController: UIViewController, CLLocationManagerDelegate, UITableVi
         serivce.getFocastData(lat: self.latitude, lon: self.longitude){ result in
             switch result{
             case .success(let apiData):
-                
+
                 self.forecastData.removeAll()
-                
+
                 for forecast in apiData {
                     let day = self.formatter.weekdaySymbols[forecast.getDayIndex()]
-                    
+
                     if self.forecastData.isEmpty || self.forecastData[self.forecastData.count-1].dayName != day {
                         self.forecastData.append(dayForecast(dayName: day, cells: [cellData]()))
                     }
-                    
+
                     self.forecastData[self.forecastData.count-1].cells.append(
                         cellData(
                             icon: forecast.weather[0].icon,
@@ -159,7 +175,7 @@ class ForecastController: UIViewController, CLLocationManagerDelegate, UITableVi
                             weather: forecast.weather[0].description)
                     )
                 }
-                
+
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
                 }

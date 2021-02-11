@@ -118,6 +118,9 @@ struct dayData {
     // isCurrentLocationData
     var curLocation: Bool
     var isMainData: Bool
+    // locat
+    var latitude : String
+    var longitude : String
 }
 
 

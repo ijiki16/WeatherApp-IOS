@@ -18,7 +18,7 @@ class TodayController: UIViewController, CLLocationManagerDelegate, UICollection
     
     private var locationManager : CLLocationManager!
     private let serivce = Service()
-    private var todayData: [dayData] = []
+    public var todayData: [dayData] = []
     private var collectionView :  UICollectionView!
     private var loader = NVActivityIndicatorView(frame: .zero, type: .lineSpinFadeLoader, color:UIColor(named: "AccentColor") ?? .yellow, padding: 0)
     private var addButton = UIButton(frame: .zero)
@@ -343,7 +343,9 @@ class TodayController: UIViewController, CLLocationManagerDelegate, UICollection
                         windSpeed: String(apiData.wind.speed) + " km/h", //"1.03 km/h",
                         windDirection: Direction(apiData.wind.deg).description, //"W"
                         curLocation: true,
-                        isMainData: true
+                        isMainData: true,
+                        latitude : String(apiData.coord.lat),
+                        longitude : String(apiData.coord.lon)
                     )
                 )
                 
@@ -394,7 +396,9 @@ class TodayController: UIViewController, CLLocationManagerDelegate, UICollection
                         windSpeed: String(apiData.wind.speed) + " km/h", //"1.03 km/h",
                         windDirection: Direction(apiData.wind.deg).description, //"W"
                         curLocation: isCurLoc,
-                        isMainData: true
+                        isMainData: true,
+                        latitude : String(apiData.coord.lat),
+                        longitude : String(apiData.coord.lon)
                     )
                 )
                 
